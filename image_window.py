@@ -26,7 +26,9 @@ class ImageWindow():
 
         self.image = contents
 
-
+    def reset_image(self):
+        self.cv_image = self._original_image
+        self._set_image()
 
     def set_image_from_file(self):
         try:
@@ -35,6 +37,8 @@ class ImageWindow():
 
             print("Opening " + fname)
             self.cv_image = cv2.imread(fname)
+            cv2.cvtColor(self.cv_image, cv2.COLOR_BGR2RGB, self.cv_image)
+
             self._original_image = self.cv_image
             self._set_image()
         except Exception as e:
@@ -42,29 +46,49 @@ class ImageWindow():
 
     def _set_image(self):
         try:
-
-            height, width, byteValue = self.cv_image.shape
-            byteValue = byteValue * width
-
-            cv2.cvtColor(self.cv_image, cv2.COLOR_BGR2RGB, self.cv_image)
-            self.mq_image = QImage(self.cv_image, width, height, byteValue, QImage.Format_RGB888)
-
+            print(self.cv_image)
+            try:
+                height, width, channels = self.cv_image.shape
+                channels = channels * width
+                print("Colour image")
+                self.mq_image = QImage(self.cv_image, width, height, channels, QImage.Format_RGB888)
+            except:
+                height, width = self.cv_image.shape
+                print("Grayscale image")
+                self.mq_image = QImage(self.cv_image, width, height, QImage.Format_Grayscale8)
 
             aspect_ratio = width/height
             self.image.setFixedSize(400 * aspect_ratio, 400)
             self.image.setPixmap(QPixmap.fromImage(self.mq_image))
 
-            self.main_window.histogram_window.set_histogram(self.cv_image)
+            self.set_histogram(None)
         except Exception as e:
-            log.error(repr(e))
+            print(repr(e))
 
     def negate_image(self):
         self.cv_image = cv2.bitwise_not(self.cv_image)
         self._set_image()
 
     def threshold_image(self, type):
-        ret, self.cv_image = cv2.threshold(self.cv_image,127,255, type)
-        self._set_image()
+        print(f"Performing Thresholding of type {type}")
+        try:
+            num, ok = QInputDialog.getInt(self.main_window, "Thresholding dialog", "enter thresholding point")
 
+            gray = cv2.cvtColor(self.cv_image, cv2.COLOR_RGB2GRAY)
+            self.cv_image = gray
+            if ok:
+                ret, self.cv_image = cv2.threshold(gray, num, 255, type)
+                self._set_image()
+        except Exception as e:
+            print(f"Thresholding failed with error {repr(e)}")
+
+    def set_histogram(self, type):
+        print(type)
+        self.main_window.histogram_window.set_histogram(self.cv_image, type)
+
+    def change_to_grayscale(self):
+        gray = cv2.cvtColor(self.cv_image, cv2.COLOR_RGB2GRAY)
+        self.cv_image = gray
+        self._set_image()
 
 
