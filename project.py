@@ -33,9 +33,15 @@ class APO_app(QMainWindow):
         self.top_menu.initialize_open_file(self.image_window.set_image_from_file)
         self.top_menu.initialize_reset_image(self.image_window.reset_image)
         self.top_menu.initialize_grayscale_conversion(self.image_window.change_to_grayscale)
+
         self.top_menu.initialize_negate(self.image_window.negate_image)
+        self.top_menu.initialize_equalize_histogram(self.image_window.equalize_histogram)
+        self.top_menu.initialize_stretch_histogram(self.image_window.stretch_histogram)
 
         self.top_menu.initialize_thresholding(self.image_window.threshold_image, THRESHOLDINGS)
+
+        self.top_menu.initialize_linear_filtering(self.image_window.linear_filtering)
+
         self.top_menu.initialize_histogram_options(self.image_window.set_histogram, HISTOGRAMS)
 
 

@@ -11,6 +11,7 @@ class TopMenu():
         self.file_menu = self.main_menu.addMenu('&File')
         self.operations_menu = self.main_menu.addMenu('&Operations')
         self.operations_thresholding_menu = self.operations_menu.addMenu('&Thresholding')
+        self.operations_filtering_menu = self.operations_menu.addMenu('&Filtering')
 
         self.histogram_menu = self.main_menu.addMenu('&Histogram')
 
@@ -42,6 +43,20 @@ class TopMenu():
 
         self.operations_menu.addAction(negation)
 
+    def initialize_equalize_histogram(self, equalize_histogram):
+        equalize = QAction("&Equalize Histogram", self.main_window)
+        equalize.setStatusTip('Equalize Histogram')
+        equalize.triggered.connect(equalize_histogram)
+
+        self.operations_menu.addAction(equalize)
+
+    def initialize_stretch_histogram(self, stretch_histogram):
+        stretch = QAction("&Stretch Histogram", self.main_window)
+        stretch.setStatusTip('Stretch Histogram')
+        stretch.triggered.connect(stretch_histogram)
+
+        self.operations_menu.addAction(stretch)
+
     def initialize_thresholding(self, thresholding_method, thresholding_variants: dict):
         for thresholding_variant in thresholding_variants:
             thresholding = QAction(f"&{thresholding_variant}", self.operations_thresholding_menu)
@@ -49,6 +64,14 @@ class TopMenu():
             print(thresholding_variants[thresholding_variant])
             thresholding.triggered.connect(partial(thresholding_method, thresholding_variants[thresholding_variant]))
             self.operations_thresholding_menu.addAction(thresholding)
+
+    def initialize_linear_filtering(self, linear_filtering_method):
+        linear_filtering = QAction("&Linear Filtering", self.operations_filtering_menu)
+        linear_filtering.setStatusTip('Liner Filtering')
+        linear_filtering.triggered.connect(linear_filtering_method)
+
+        self.operations_filtering_menu.addAction(linear_filtering)
+
 
     def initialize_histogram_options(self, histogram_method, histogram_variants: dict):
         for histogram_variant in histogram_variants:

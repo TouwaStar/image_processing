@@ -59,11 +59,11 @@ class HistogramWindow():
         try:
             b, g, r = cv2.split(image)
             ax1 = self.figure.add_subplot(111)
-            ax1.hist([b.ravel(), g.ravel(), r.ravel()], 20, color=['b', 'g', 'r'], density=True)
+            ax1.hist([b.ravel(), g.ravel(), r.ravel()], 256,  color=['b', 'g', 'r'])
         except:
             # Grayscale image
             ax1 = self.figure.add_subplot(111)
-            ax1.hist(image.ravel(),20,color='black')
+            ax1.hist(image.ravel(),256, color='black')
 
         self.canvas.draw()
 
