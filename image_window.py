@@ -11,6 +11,8 @@ from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as Navigatio
 from matplotlib.figure import Figure
 import numpy as np
 from mask_setup_dialog import MaskSetupDialog
+from morphological_setup_dialog import MorphologySetupDialog
+from segmentation_setup_dialog import SegmentationSetupDialog
 
 
 class ImageWindow():
@@ -37,12 +39,22 @@ class ImageWindow():
             fname = QFileDialog.getOpenFileName(self.main_window, 'Open file',
                                                 'c:\\', "Image files (*.jpg *.gif *.tif *.png)")[0]
 
-            print("Opening " + fname)
+            print(f"Opening {fname}")
             self.cv_image = cv2.imread(fname)
             cv2.cvtColor(self.cv_image, cv2.COLOR_BGR2RGB, self.cv_image)
 
             self._original_image = self.cv_image
             self._set_image()
+        except Exception as e:
+            log.error(repr(e))
+
+    def save_image_to_file(self):
+        try:
+            fname = QFileDialog.getSaveFileName(self.main_window, 'Save file',
+                                                'c:\\', "Image files (*.jpg *.png)")[0]
+            print(f"Saving image to {fname}")
+            cv2.imwrite(fname,self.cv_image)
+
         except Exception as e:
             log.error(repr(e))
 
@@ -56,8 +68,13 @@ class ImageWindow():
                 self.mq_image = QImage(self.cv_image, width, height, channels, QImage.Format_RGB888)
             except:
                 height, width = self.cv_image.shape
+                # calculate the total number of bytes in the frame
+                totalBytes = self.cv_image.nbytes
+
+                # divide by the number of rows
+                bytesPerLine = int(totalBytes / height)
                 print("Grayscale image")
-                self.mq_image = QImage(self.cv_image, width, height, QImage.Format_Grayscale8)
+                self.mq_image = QImage(self.cv_image, width, height, bytesPerLine, QImage.Format_Grayscale8)
 
             aspect_ratio = width/height
             self.image.setFixedSize(400 * aspect_ratio, 400)
@@ -127,23 +144,52 @@ class ImageWindow():
             self.stretch_histogram()
 
     def linear_filtering(self):
-        dialog = MaskSetupDialog(self.cv_image)
+        try:
+            dialog = MaskSetupDialog(self.cv_image)
+
+            if dialog.exec():
+                self.cv_image = dialog.getInputs()
+                self._set_image()
+        except Exception as e:
+            print(f"Exception using mask seutp dialog {repr(e)}")
+
+    def morphological_operations(self):
+        dialog = MorphologySetupDialog(self.cv_image)
 
         if dialog.exec():
-            mask, border_type = dialog.getInputs()
-            print(f"Border type {border_type}")
-            if border_type is None or mask is None:
-                return
+            self.cv_image = dialog.getInputs()
+            self._set_image()
 
-            try:
-                kernel = np.array(mask, dtype=np.float32)
-                if kernel.sum() != 0:
-                    kernel /= kernel.sum()
-                self.cv_image = cv2.filter2D(self.cv_image, -1, kernel, borderType=border_type)
+    def segmentation_operations(self):
+        dialog = SegmentationSetupDialog(self.cv_image)
+
+        if dialog.exec():
+            self.cv_image = dialog.getInputs()
+            self._set_image()
+
+    def skeletize(self):
+        img = self.cv_image
+
+        skeleton = np.zeros(img.shape, np.uint8)
+        eroded = np.zeros(img.shape, np.uint8)
+        temp = np.zeros(img.shape, np.uint8)
+
+        _, thresh = cv2.threshold(img, 127, 255, 0)
+
+        kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))
+
+        iters = 0
+        while (True):
+            cv2.erode(thresh, kernel, eroded,borderType=cv2.BORDER_REPLICATE)
+            cv2.dilate(eroded, kernel, temp,borderType=cv2.BORDER_REPLICATE)
+            cv2.subtract(thresh, temp, temp)
+            cv2.bitwise_or(skeleton, temp, skeleton)
+            thresh, eroded = eroded, thresh  # Swap instead of copy
+
+            iters += 1
+            if cv2.countNonZero(thresh) == 0:
+                self.cv_image = skeleton
                 self._set_image()
-
-            except Exception as e:
-                print(f"Exception while creating linear filter for image {repr(e)}")
-
+                return
 
 

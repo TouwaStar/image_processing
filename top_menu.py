@@ -22,6 +22,13 @@ class TopMenu():
 
         self.file_menu.addAction(open_file)
 
+    def initialize_save_file(self, save_file_method):
+        save_file = QAction("&Save File", self.main_window)
+        save_file.setStatusTip('Save Image File')
+        save_file.triggered.connect(save_file_method)
+
+        self.file_menu.addAction(save_file)
+
     def initialize_grayscale_conversion(self, convert_method):
         convert_to_gray = QAction("&Convert to Grayscale", self.main_window)
         convert_to_gray.setStatusTip('Convert to Grayscale')
@@ -72,6 +79,20 @@ class TopMenu():
 
         self.operations_filtering_menu.addAction(linear_filtering)
 
+    def initialize_segmentation(self, segmentation_method):
+        segmentation = QAction("&Segmentation", self.operations_menu)
+        segmentation.setStatusTip('Segmentation')
+        segmentation.triggered.connect(segmentation_method)
+
+        self.operations_menu.addAction(segmentation)
+
+    def initialize_morphology(self, morphology_method):
+        morphology = QAction("&Morphology", self.operations_filtering_menu)
+        morphology.setStatusTip('Morphology')
+        morphology.triggered.connect(morphology_method)
+
+        self.operations_filtering_menu.addAction(morphology)
+
 
     def initialize_histogram_options(self, histogram_method, histogram_variants: dict):
         for histogram_variant in histogram_variants:
@@ -81,3 +102,9 @@ class TopMenu():
             histogram.triggered.connect(partial(histogram_method, histogram_variants[histogram_variant]))
             self.histogram_menu.addAction(histogram)
 
+    def initialize_skeletize(self, skeletize_method):
+        skeletize = QAction("&Skeletize", self.operations_menu)
+        skeletize.setStatusTip('Skeletize')
+        skeletize.triggered.connect(skeletize_method)
+
+        self.operations_menu.addAction(skeletize)
