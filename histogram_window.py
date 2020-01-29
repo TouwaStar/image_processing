@@ -15,6 +15,7 @@ from consts import HISTOGRAM_TYPES
 
 
 class HistogramWindow():
+    """Class responsible for displaying the histogram in the histogram window"""
     def __init__(self, main_window):
         self.main_window = main_window
         self.cv_image = None
@@ -39,6 +40,7 @@ class HistogramWindow():
         self.last_histogram_type = HISTOGRAM_TYPES.Bar
 
     def set_histogram(self, image, type=None):
+        """Recreates a new histogram based on last histogram type used or new value set by user"""
         try:
             if not type:
                 type_to_set = self.last_histogram_type
@@ -53,6 +55,7 @@ class HistogramWindow():
             print(f"Enconuntered exception while setting histogram {repr(e)}")
 
     def _set_histogram_bar(self, image):
+        """Creates a bar histogram by calculating the histogram in pyqt"""
         color = ('b', 'g', 'r')
         self.figure.clear()
 
@@ -68,6 +71,7 @@ class HistogramWindow():
         self.canvas.draw()
 
     def _set_histogram_continuous(self, image):
+        """Creates a continous histogram, default for opencv calcHist method"""
         color = ('b', 'g', 'r')
         self.figure.clear()
         for i, col in enumerate(color):

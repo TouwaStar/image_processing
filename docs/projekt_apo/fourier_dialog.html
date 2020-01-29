@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.4" />
+<title>projekt_apo.fourier_dialog API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>projekt_apo.fourier_dialog</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import cv2
+import logging as log
+
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from matplotlib import pyplot as plt
+from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
+from matplotlib.figure import Figure
+import numpy as np
+import time
+
+class FourierDialog(QDialog):
+    &#34;&#34;&#34;Dialog window responsible for fourier and amplitude manipulation&#34;&#34;&#34;
+    def __init__(self,cv_image, parent = None):
+        try:
+            super().__init__(parent)
+            self.original_cv_image = cv_image
+            self.working_image = self.original_cv_image
+            self.cv_image = self.original_cv_image
+
+            self.main_layout = QGridLayout()
+            self.setLayout(self.main_layout)
+            # self._stop_operations = False
+            # self.main_layout.addLayout(self.mask_layout,0,1)
+
+
+            buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
+            buttonBox.accepted.connect(self.accept)
+            buttonBox.rejected.connect(self.reject)
+
+            apply_button = QPushButton(&#34;Apply Mask&#34;)
+            apply_button.clicked.connect(self._apply_changes)
+            reset_button = QPushButton(&#34;Reset Image&#34;)
+            reset_button.clicked.connect(self._reset_image)
+
+            image_setting_layout = QHBoxLayout()
+            image_setting_layout.addWidget(apply_button)
+            image_setting_layout.addWidget(reset_button)
+
+            fourier_2x_more = QPushButton(&#34;Apply Fourier 2*x&#34;)
+            fourier_2x_more.clicked.connect(self.fft_2x_more)
+            fourier_2x_less = QPushButton(&#34;Apply Fourier x/2&#34;)
+            fourier_2x_less.clicked.connect(self.fft_2x_less)
+            fourier_value = QPushButton(&#34;Apply Fourier value&#34;)
+            fourier_value.clicked.connect(self.fft_value)
+            self.fourier_value_text = QLineEdit()
+            self.fourier_value_text.setText(&#39;1&#39;)
+            # merging.clicked.connect(self.apply_merge)
+            #
+            # self.thresholding = QLineEdit(self)
+            # self.thresholding.setText(&#39;1&#39;)
+            #
+            #
+            operations_layout = QHBoxLayout()
+            operations_layout.addWidget(fourier_2x_more)
+            operations_layout.addWidget(fourier_2x_less)
+            operations_layout.addWidget(fourier_value)
+            operations_layout.addWidget(self.fourier_value_text)
+            # operations_layout.addWidget(merging)
+            # operations_layout.addWidget(self.thresholding)
+            #
+            self.main_layout.addWidget(buttonBox,2,1)
+            self.main_layout.addLayout(image_setting_layout,2,2)
+            self.main_layout.addLayout(operations_layout,2,0)
+            #
+            #
+            #
+            # self.region_to_operate = 0,0
+
+
+            # self.mask_scale = QLineEdit(self)
+            # self.mask_scale.setText(&#39;1&#39;)
+            # self.mask_scale_label = QLabel(&#34;Scale&#34;)
+            # mask_scale_layout = QHBoxLayout()
+            # mask_scale_layout.addWidget(self.mask_scale_label)
+            # mask_scale_layout.addWidget(self.mask_scale)
+
+            self.image_preview = QLabel()
+            self.image_preview.setFixedSize(400, 400)
+            self.image_preview.setStyleSheet(&#34;background-color: white; border: 2px inset grey;&#34;)
+            self.image_preview.setScaledContents(True)
+            self.main_layout.addWidget(self.image_preview,0,2)
+            self.set_image()
+
+
+        except Exception as e:
+            print(f&#34;Unable to initialize mask setup dialog {repr(e)}&#34;)
+
+    def _reset_image(self):
+        self.working_image = self.original_cv_image
+        self.cv_image = self.working_image
+        self.set_image()
+
+    def _apply_changes(self):
+        self.working_image = self.cv_image
+
+    def set_mask_layout(self, x, y):
+        for i in reversed(range(self.mask_layout.count())):
+            self.mask_layout.itemAt(i).widget().setParent(None)
+        self.main_layout.removeItem(self.mask_layout)
+        self.mask_layout = QGridLayout()
+
+        self.input_fields = []
+        for i in range(0, x*y):
+            input_field = QLineEdit(self)
+            input_field.setText(&#39;1&#39;)
+            self.input_fields.append(input_field)
+
+        total = -1
+        for i in range(0, x):
+            for j in range(0, y):
+                total += 1
+                self.mask_layout.addWidget(self.input_fields[total], i, j)
+                print(f&#34;i: {i} j: {j} total: {total}&#34;)
+
+        self.main_layout.addLayout(self.mask_layout, 0,1)
+
+    def set_image(self):
+        try:
+            height, width, channels = self.cv_image.shape
+            channels = channels * width
+            self.mq_image = QImage(self.cv_image.copy(), width, height, channels, QImage.Format_RGB888)
+        except:
+            height, width = self.cv_image.shape
+            # calculate the total number of bytes in the frame
+            totalBytes = self.cv_image.nbytes
+
+            # divide by the number of rows
+            bytesPerLine = int(totalBytes / height)
+            self.mq_image = QImage(self.cv_image.copy(), width, height, bytesPerLine, QImage.Format_Grayscale8)
+
+        aspect_ratio = width / height
+        self.image_preview.setFixedSize(400 * aspect_ratio, 400)
+        self.image_preview.setPixmap(QPixmap.fromImage(self.mq_image))
+        QApplication.processEvents()
+
+    def fft_2x_more(self):
+        &#34;&#34;&#34;2x Intensify the selected values of spectrum, the selected values are received from a selectROI call on the magnitude spectrum&#34;&#34;&#34;
+        try:
+            spectrum, fshift = self._fft_v()
+            magnitude_spectrum = np.asarray(spectrum, dtype=np.uint8)
+            r = cv2.selectROI(&#39;Magnitude spectrum&#39;, magnitude_spectrum, showCrosshair=False)
+            cv2.destroyWindow(&#39;Magnitude spectrum&#39;)
+            for x in range(r[0],r[2]+r[0]):
+                for y in range(r[1],r[3]+r[1]):
+                    fshift[x,y] = fshift[x,y] * 2
+
+            fshift = np.fft.ifftshift(fshift)
+            ft_image = np.fft.ifft2(fshift)
+            img_back = np.abs(ft_image)
+            img_back = np.asarray(img_back, dtype=np.uint8)
+            self.cv_image = img_back
+            self.set_image()
+        except Exception as e:
+            cv2.destroyWindow(&#39;Magnitude spectrum&#39;)
+
+
+    def fft_2x_less(self):
+        &#34;&#34;&#34;2x DeIntensify the selected values of spectrum, the selected values are received from a selectROI call on the magnitude spectrum&#34;&#34;&#34;
+        try:
+            spectrum, fshift = self._fft_v()
+            magnitude_spectrum = np.asarray(spectrum, dtype=np.uint8)
+            r = cv2.selectROI(&#39;Magnitude spectrum&#39;, magnitude_spectrum, showCrosshair=False)
+            cv2.destroyWindow(&#39;Magnitude spectrum&#39;)
+            for x in range(r[0], r[2] + r[0]):
+                for y in range(r[1], r[3] + r[1]):
+                    fshift[x, y] = fshift[x, y] / 2
+
+            fshift = np.fft.ifftshift(fshift)
+            ft_image = np.fft.ifft2(fshift)
+            img_back = np.abs(ft_image)
+            img_back = np.asarray(img_back, dtype=np.uint8)
+            self.cv_image = img_back
+            self.set_image()
+        except:
+
+            cv2.destroyWindow(&#39;Magnitude spectrum&#39;)
+
+    def fft_value(self):
+        &#34;&#34;&#34;Increase or decrease the selected values of spectrum, the selected values are received from a selectROI call on the magnitude spectrum&#34;&#34;&#34;
+        try:
+            spectrum, fshift = self._fft_v()
+            magnitude_spectrum = np.asarray(spectrum, dtype=np.uint8)
+            r = cv2.selectROI(&#39;Magnitude spectrum&#39;, magnitude_spectrum, showCrosshair=False)
+            cv2.destroyWindow(&#39;Magnitude spectrum&#39;)
+            for x in range(r[0], r[2] + r[0]):
+                for y in range(r[1], r[3] + r[1]):
+                    fshift[x, y] = fshift[x, y] + int(self.fourier_value_text.text())
+
+            fshift = np.fft.ifftshift(fshift)
+            ft_image = np.fft.ifft2(fshift)
+            img_back = np.abs(ft_image)
+            img_back = np.asarray(img_back, dtype=np.uint8)
+            self.cv_image = img_back
+            self.set_image()
+        except:
+            cv2.destroyWindow(&#39;Magnitude spectrum&#39;)
+
+
+    def _fft_v(self):
+        &#34;&#34;&#34;Generic method for retrieving magnitude spectrum and fshift of an image using FFT algorithm&#34;&#34;&#34;
+        try:
+            ft_image = np.fft.fft2(self.cv_image)
+            fshift = np.fft.fftshift(ft_image)
+            magnitude_spectrum = 20*np.log(np.abs(fshift))
+            spectrum = magnitude_spectrum
+            return spectrum, fshift
+        except Exception as e:
+            print(f&#34;Exception during fourier transform {repr(e)}&#34;)
+        else:
+            x = self.cv_image
+            N = x.shape[0]
+            if np.log2(N) % 1 &gt; 0:
+                raise ValueError(&#34;must be a power of 2&#34;)
+
+            N_min = min(N, 2)
+
+            n = np.arange(N_min)
+            k = n[:, None]
+            M = np.exp(-2j * np.pi * n * k / N_min)
+            X = np.dot(M, x.reshape((N_min, -1)))
+
+            while X.shape[0] &lt; N:
+                X_even = X[:, :int(X.shape[1] / 2)]
+                X_odd = X[:, int(X.shape[1] / 2):]
+                terms = np.exp(-1j * np.pi * np.arange(X.shape[0])
+                               / X.shape[0])[:, None]
+                X = np.vstack([X_even + terms * X_odd,
+                               X_even - terms * X_odd])
+            self.cv_image = X
+            self.set_image()
+
+
+    def getInputs(self):
+        &#34;&#34;&#34;Returns the current processing of the image to the image window class&#34;&#34;&#34;
+        return self.cv_image</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="projekt_apo.fourier_dialog.FourierDialog"><code class="flex name class">
+<span>class <span class="ident">FourierDialog</span></span>
+<span>(</span><span>cv_image, parent=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Dialog window responsible for fourier and amplitude manipulation</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FourierDialog(QDialog):
+    &#34;&#34;&#34;Dialog window responsible for fourier and amplitude manipulation&#34;&#34;&#34;
+    def __init__(self,cv_image, parent = None):
+        try:
+            super().__init__(parent)
+            self.original_cv_image = cv_image
+            self.working_image = self.original_cv_image
+            self.cv_image = self.original_cv_image
+
+            self.main_layout = QGridLayout()
+            self.setLayout(self.main_layout)
+            # self._stop_operations = False
+            # self.main_layout.addLayout(self.mask_layout,0,1)
+
+
+            buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
+            buttonBox.accepted.connect(self.accept)
+            buttonBox.rejected.connect(self.reject)
+
+            apply_button = QPushButton(&#34;Apply Mask&#34;)
+            apply_button.clicked.connect(self._apply_changes)
+            reset_button = QPushButton(&#34;Reset Image&#34;)
+            reset_button.clicked.connect(self._reset_image)
+
+            image_setting_layout = QHBoxLayout()
+            image_setting_layout.addWidget(apply_button)
+            image_setting_layout.addWidget(reset_button)
+
+            fourier_2x_more = QPushButton(&#34;Apply Fourier 2*x&#34;)
+            fourier_2x_more.clicked.connect(self.fft_2x_more)
+            fourier_2x_less = QPushButton(&#34;Apply Fourier x/2&#34;)
+            fourier_2x_less.clicked.connect(self.fft_2x_less)
+            fourier_value = QPushButton(&#34;Apply Fourier value&#34;)
+            fourier_value.clicked.connect(self.fft_value)
+            self.fourier_value_text = QLineEdit()
+            self.fourier_value_text.setText(&#39;1&#39;)
+            # merging.clicked.connect(self.apply_merge)
+            #
+            # self.thresholding = QLineEdit(self)
+            # self.thresholding.setText(&#39;1&#39;)
+            #
+            #
+            operations_layout = QHBoxLayout()
+            operations_layout.addWidget(fourier_2x_more)
+            operations_layout.addWidget(fourier_2x_less)
+            operations_layout.addWidget(fourier_value)
+            operations_layout.addWidget(self.fourier_value_text)
+            # operations_layout.addWidget(merging)
+            # operations_layout.addWidget(self.thresholding)
+            #
+            self.main_layout.addWidget(buttonBox,2,1)
+            self.main_layout.addLayout(image_setting_layout,2,2)
+            self.main_layout.addLayout(operations_layout,2,0)
+            #
+            #
+            #
+            # self.region_to_operate = 0,0
+
+
+            # self.mask_scale = QLineEdit(self)
+            # self.mask_scale.setText(&#39;1&#39;)
+            # self.mask_scale_label = QLabel(&#34;Scale&#34;)
+            # mask_scale_layout = QHBoxLayout()
+            # mask_scale_layout.addWidget(self.mask_scale_label)
+            # mask_scale_layout.addWidget(self.mask_scale)
+
+            self.image_preview = QLabel()
+            self.image_preview.setFixedSize(400, 400)
+            self.image_preview.setStyleSheet(&#34;background-color: white; border: 2px inset grey;&#34;)
+            self.image_preview.setScaledContents(True)
+            self.main_layout.addWidget(self.image_preview,0,2)
+            self.set_image()
+
+
+        except Exception as e:
+            print(f&#34;Unable to initialize mask setup dialog {repr(e)}&#34;)
+
+    def _reset_image(self):
+        self.working_image = self.original_cv_image
+        self.cv_image = self.working_image
+        self.set_image()
+
+    def _apply_changes(self):
+        self.working_image = self.cv_image
+
+    def set_mask_layout(self, x, y):
+        for i in reversed(range(self.mask_layout.count())):
+            self.mask_layout.itemAt(i).widget().setParent(None)
+        self.main_layout.removeItem(self.mask_layout)
+        self.mask_layout = QGridLayout()
+
+        self.input_fields = []
+        for i in range(0, x*y):
+            input_field = QLineEdit(self)
+            input_field.setText(&#39;1&#39;)
+            self.input_fields.append(input_field)
+
+        total = -1
+        for i in range(0, x):
+            for j in range(0, y):
+                total += 1
+                self.mask_layout.addWidget(self.input_fields[total], i, j)
+                print(f&#34;i: {i} j: {j} total: {total}&#34;)
+
+        self.main_layout.addLayout(self.mask_layout, 0,1)
+
+    def set_image(self):
+        try:
+            height, width, channels = self.cv_image.shape
+            channels = channels * width
+            self.mq_image = QImage(self.cv_image.copy(), width, height, channels, QImage.Format_RGB888)
+        except:
+            height, width = self.cv_image.shape
+            # calculate the total number of bytes in the frame
+            totalBytes = self.cv_image.nbytes
+
+            # divide by the number of rows
+            bytesPerLine = int(totalBytes / height)
+            self.mq_image = QImage(self.cv_image.copy(), width, height, bytesPerLine, QImage.Format_Grayscale8)
+
+        aspect_ratio = width / height
+        self.image_preview.setFixedSize(400 * aspect_ratio, 400)
+        self.image_preview.setPixmap(QPixmap.fromImage(self.mq_image))
+        QApplication.processEvents()
+
+    def fft_2x_more(self):
+        &#34;&#34;&#34;2x Intensify the selected values of spectrum, the selected values are received from a selectROI call on the magnitude spectrum&#34;&#34;&#34;
+        try:
+            spectrum, fshift = self._fft_v()
+            magnitude_spectrum = np.asarray(spectrum, dtype=np.uint8)
+            r = cv2.selectROI(&#39;Magnitude spectrum&#39;, magnitude_spectrum, showCrosshair=False)
+            cv2.destroyWindow(&#39;Magnitude spectrum&#39;)
+            for x in range(r[0],r[2]+r[0]):
+                for y in range(r[1],r[3]+r[1]):
+                    fshift[x,y] = fshift[x,y] * 2
+
+            fshift = np.fft.ifftshift(fshift)
+            ft_image = np.fft.ifft2(fshift)
+            img_back = np.abs(ft_image)
+            img_back = np.asarray(img_back, dtype=np.uint8)
+            self.cv_image = img_back
+            self.set_image()
+        except Exception as e:
+            cv2.destroyWindow(&#39;Magnitude spectrum&#39;)
+
+
+    def fft_2x_less(self):
+        &#34;&#34;&#34;2x DeIntensify the selected values of spectrum, the selected values are received from a selectROI call on the magnitude spectrum&#34;&#34;&#34;
+        try:
+            spectrum, fshift = self._fft_v()
+            magnitude_spectrum = np.asarray(spectrum, dtype=np.uint8)
+            r = cv2.selectROI(&#39;Magnitude spectrum&#39;, magnitude_spectrum, showCrosshair=False)
+            cv2.destroyWindow(&#39;Magnitude spectrum&#39;)
+            for x in range(r[0], r[2] + r[0]):
+                for y in range(r[1], r[3] + r[1]):
+                    fshift[x, y] = fshift[x, y] / 2
+
+            fshift = np.fft.ifftshift(fshift)
+            ft_image = np.fft.ifft2(fshift)
+            img_back = np.abs(ft_image)
+            img_back = np.asarray(img_back, dtype=np.uint8)
+            self.cv_image = img_back
+            self.set_image()
+        except:
+
+            cv2.destroyWindow(&#39;Magnitude spectrum&#39;)
+
+    def fft_value(self):
+        &#34;&#34;&#34;Increase or decrease the selected values of spectrum, the selected values are received from a selectROI call on the magnitude spectrum&#34;&#34;&#34;
+        try:
+            spectrum, fshift = self._fft_v()
+            magnitude_spectrum = np.asarray(spectrum, dtype=np.uint8)
+            r = cv2.selectROI(&#39;Magnitude spectrum&#39;, magnitude_spectrum, showCrosshair=False)
+            cv2.destroyWindow(&#39;Magnitude spectrum&#39;)
+            for x in range(r[0], r[2] + r[0]):
+                for y in range(r[1], r[3] + r[1]):
+                    fshift[x, y] = fshift[x, y] + int(self.fourier_value_text.text())
+
+            fshift = np.fft.ifftshift(fshift)
+            ft_image = np.fft.ifft2(fshift)
+            img_back = np.abs(ft_image)
+            img_back = np.asarray(img_back, dtype=np.uint8)
+            self.cv_image = img_back
+            self.set_image()
+        except:
+            cv2.destroyWindow(&#39;Magnitude spectrum&#39;)
+
+
+    def _fft_v(self):
+        &#34;&#34;&#34;Generic method for retrieving magnitude spectrum and fshift of an image using FFT algorithm&#34;&#34;&#34;
+        try:
+            ft_image = np.fft.fft2(self.cv_image)
+            fshift = np.fft.fftshift(ft_image)
+            magnitude_spectrum = 20*np.log(np.abs(fshift))
+            spectrum = magnitude_spectrum
+            return spectrum, fshift
+        except Exception as e:
+            print(f&#34;Exception during fourier transform {repr(e)}&#34;)
+        else:
+            x = self.cv_image
+            N = x.shape[0]
+            if np.log2(N) % 1 &gt; 0:
+                raise ValueError(&#34;must be a power of 2&#34;)
+
+            N_min = min(N, 2)
+
+            n = np.arange(N_min)
+            k = n[:, None]
+            M = np.exp(-2j * np.pi * n * k / N_min)
+            X = np.dot(M, x.reshape((N_min, -1)))
+
+            while X.shape[0] &lt; N:
+                X_even = X[:, :int(X.shape[1] / 2)]
+                X_odd = X[:, int(X.shape[1] / 2):]
+                terms = np.exp(-1j * np.pi * np.arange(X.shape[0])
+                               / X.shape[0])[:, None]
+                X = np.vstack([X_even + terms * X_odd,
+                               X_even - terms * X_odd])
+            self.cv_image = X
+            self.set_image()
+
+
+    def getInputs(self):
+        &#34;&#34;&#34;Returns the current processing of the image to the image window class&#34;&#34;&#34;
+        return self.cv_image</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>PyQt5.QtWidgets.QDialog</li>
+<li>PyQt5.QtWidgets.QWidget</li>
+<li>PyQt5.QtCore.QObject</li>
+<li>sip.wrapper</li>
+<li>PyQt5.QtGui.QPaintDevice</li>
+<li>sip.simplewrapper</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="projekt_apo.fourier_dialog.FourierDialog.fft_2x_less"><code class="name flex">
+<span>def <span class="ident">fft_2x_less</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>2x DeIntensify the selected values of spectrum, the selected values are received from a selectROI call on the magnitude spectrum</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fft_2x_less(self):
+    &#34;&#34;&#34;2x DeIntensify the selected values of spectrum, the selected values are received from a selectROI call on the magnitude spectrum&#34;&#34;&#34;
+    try:
+        spectrum, fshift = self._fft_v()
+        magnitude_spectrum = np.asarray(spectrum, dtype=np.uint8)
+        r = cv2.selectROI(&#39;Magnitude spectrum&#39;, magnitude_spectrum, showCrosshair=False)
+        cv2.destroyWindow(&#39;Magnitude spectrum&#39;)
+        for x in range(r[0], r[2] + r[0]):
+            for y in range(r[1], r[3] + r[1]):
+                fshift[x, y] = fshift[x, y] / 2
+
+        fshift = np.fft.ifftshift(fshift)
+        ft_image = np.fft.ifft2(fshift)
+        img_back = np.abs(ft_image)
+        img_back = np.asarray(img_back, dtype=np.uint8)
+        self.cv_image = img_back
+        self.set_image()
+    except:
+
+        cv2.destroyWindow(&#39;Magnitude spectrum&#39;)</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.fourier_dialog.FourierDialog.fft_2x_more"><code class="name flex">
+<span>def <span class="ident">fft_2x_more</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>2x Intensify the selected values of spectrum, the selected values are received from a selectROI call on the magnitude spectrum</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fft_2x_more(self):
+    &#34;&#34;&#34;2x Intensify the selected values of spectrum, the selected values are received from a selectROI call on the magnitude spectrum&#34;&#34;&#34;
+    try:
+        spectrum, fshift = self._fft_v()
+        magnitude_spectrum = np.asarray(spectrum, dtype=np.uint8)
+        r = cv2.selectROI(&#39;Magnitude spectrum&#39;, magnitude_spectrum, showCrosshair=False)
+        cv2.destroyWindow(&#39;Magnitude spectrum&#39;)
+        for x in range(r[0],r[2]+r[0]):
+            for y in range(r[1],r[3]+r[1]):
+                fshift[x,y] = fshift[x,y] * 2
+
+        fshift = np.fft.ifftshift(fshift)
+        ft_image = np.fft.ifft2(fshift)
+        img_back = np.abs(ft_image)
+        img_back = np.asarray(img_back, dtype=np.uint8)
+        self.cv_image = img_back
+        self.set_image()
+    except Exception as e:
+        cv2.destroyWindow(&#39;Magnitude spectrum&#39;)</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.fourier_dialog.FourierDialog.fft_value"><code class="name flex">
+<span>def <span class="ident">fft_value</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Increase or decrease the selected values of spectrum, the selected values are received from a selectROI call on the magnitude spectrum</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fft_value(self):
+    &#34;&#34;&#34;Increase or decrease the selected values of spectrum, the selected values are received from a selectROI call on the magnitude spectrum&#34;&#34;&#34;
+    try:
+        spectrum, fshift = self._fft_v()
+        magnitude_spectrum = np.asarray(spectrum, dtype=np.uint8)
+        r = cv2.selectROI(&#39;Magnitude spectrum&#39;, magnitude_spectrum, showCrosshair=False)
+        cv2.destroyWindow(&#39;Magnitude spectrum&#39;)
+        for x in range(r[0], r[2] + r[0]):
+            for y in range(r[1], r[3] + r[1]):
+                fshift[x, y] = fshift[x, y] + int(self.fourier_value_text.text())
+
+        fshift = np.fft.ifftshift(fshift)
+        ft_image = np.fft.ifft2(fshift)
+        img_back = np.abs(ft_image)
+        img_back = np.asarray(img_back, dtype=np.uint8)
+        self.cv_image = img_back
+        self.set_image()
+    except:
+        cv2.destroyWindow(&#39;Magnitude spectrum&#39;)</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.fourier_dialog.FourierDialog.getInputs"><code class="name flex">
+<span>def <span class="ident">getInputs</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Returns the current processing of the image to the image window class</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getInputs(self):
+    &#34;&#34;&#34;Returns the current processing of the image to the image window class&#34;&#34;&#34;
+    return self.cv_image</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.fourier_dialog.FourierDialog.set_image"><code class="name flex">
+<span>def <span class="ident">set_image</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_image(self):
+    try:
+        height, width, channels = self.cv_image.shape
+        channels = channels * width
+        self.mq_image = QImage(self.cv_image.copy(), width, height, channels, QImage.Format_RGB888)
+    except:
+        height, width = self.cv_image.shape
+        # calculate the total number of bytes in the frame
+        totalBytes = self.cv_image.nbytes
+
+        # divide by the number of rows
+        bytesPerLine = int(totalBytes / height)
+        self.mq_image = QImage(self.cv_image.copy(), width, height, bytesPerLine, QImage.Format_Grayscale8)
+
+    aspect_ratio = width / height
+    self.image_preview.setFixedSize(400 * aspect_ratio, 400)
+    self.image_preview.setPixmap(QPixmap.fromImage(self.mq_image))
+    QApplication.processEvents()</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.fourier_dialog.FourierDialog.set_mask_layout"><code class="name flex">
+<span>def <span class="ident">set_mask_layout</span></span>(<span>self, x, y)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_mask_layout(self, x, y):
+    for i in reversed(range(self.mask_layout.count())):
+        self.mask_layout.itemAt(i).widget().setParent(None)
+    self.main_layout.removeItem(self.mask_layout)
+    self.mask_layout = QGridLayout()
+
+    self.input_fields = []
+    for i in range(0, x*y):
+        input_field = QLineEdit(self)
+        input_field.setText(&#39;1&#39;)
+        self.input_fields.append(input_field)
+
+    total = -1
+    for i in range(0, x):
+        for j in range(0, y):
+            total += 1
+            self.mask_layout.addWidget(self.input_fields[total], i, j)
+            print(f&#34;i: {i} j: {j} total: {total}&#34;)
+
+    self.main_layout.addLayout(self.mask_layout, 0,1)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="projekt_apo" href="index.html">projekt_apo</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="projekt_apo.fourier_dialog.FourierDialog" href="#projekt_apo.fourier_dialog.FourierDialog">FourierDialog</a></code></h4>
+<ul class="two-column">
+<li><code><a title="projekt_apo.fourier_dialog.FourierDialog.fft_2x_less" href="#projekt_apo.fourier_dialog.FourierDialog.fft_2x_less">fft_2x_less</a></code></li>
+<li><code><a title="projekt_apo.fourier_dialog.FourierDialog.fft_2x_more" href="#projekt_apo.fourier_dialog.FourierDialog.fft_2x_more">fft_2x_more</a></code></li>
+<li><code><a title="projekt_apo.fourier_dialog.FourierDialog.fft_value" href="#projekt_apo.fourier_dialog.FourierDialog.fft_value">fft_value</a></code></li>
+<li><code><a title="projekt_apo.fourier_dialog.FourierDialog.getInputs" href="#projekt_apo.fourier_dialog.FourierDialog.getInputs">getInputs</a></code></li>
+<li><code><a title="projekt_apo.fourier_dialog.FourierDialog.set_image" href="#projekt_apo.fourier_dialog.FourierDialog.set_image">set_image</a></code></li>
+<li><code><a title="projekt_apo.fourier_dialog.FourierDialog.set_mask_layout" href="#projekt_apo.fourier_dialog.FourierDialog.set_mask_layout">set_mask_layout</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.4</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

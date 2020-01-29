@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import *
 from functools import partial
 
 class TopMenu():
+    """Defines the available operations and options in the top menu of the GUI
+    every initialization creates a link to provided method that activates on mouse click"""
     def __init__(self, main_window, ):
         self.main_window = main_window
         self.main_menu = self.main_window.menuBar()
@@ -69,8 +71,10 @@ class TopMenu():
             thresholding = QAction(f"&{thresholding_variant}", self.operations_thresholding_menu)
             print(thresholding_variant)
             print(thresholding_variants[thresholding_variant])
-            thresholding.triggered.connect(partial(thresholding_method, thresholding_variants[thresholding_variant]))
+            thresholding.triggered.connect(partial(thresholding_method, thresholding_variants[thresholding_variant], None))
             self.operations_thresholding_menu.addAction(thresholding)
+
+
 
     def initialize_linear_filtering(self, linear_filtering_method):
         linear_filtering = QAction("&Linear Filtering", self.operations_filtering_menu)
@@ -79,13 +83,6 @@ class TopMenu():
 
         self.operations_filtering_menu.addAction(linear_filtering)
 
-    def initialize_segmentation(self, segmentation_method):
-        segmentation = QAction("&Segmentation", self.operations_menu)
-        segmentation.setStatusTip('Segmentation')
-        segmentation.triggered.connect(segmentation_method)
-
-        self.operations_menu.addAction(segmentation)
-
     def initialize_morphology(self, morphology_method):
         morphology = QAction("&Morphology", self.operations_filtering_menu)
         morphology.setStatusTip('Morphology')
@@ -93,6 +90,33 @@ class TopMenu():
 
         self.operations_filtering_menu.addAction(morphology)
 
+    def initialize_segmentation(self, segmentation_method):
+        segmentation = QAction("&Segmentation", self.operations_menu)
+        segmentation.setStatusTip('Segmentation')
+        segmentation.triggered.connect(segmentation_method)
+
+        self.operations_menu.addAction(segmentation)
+
+    def initialize_skeletize(self, skeletize_method):
+        skeletize = QAction("&Skeletize", self.operations_menu)
+        skeletize.setStatusTip('Skeletize')
+        skeletize.triggered.connect(skeletize_method)
+
+        self.operations_menu.addAction(skeletize)
+
+    def initialize_fourier(self, fourier_method):
+        fourier = QAction("&Fourier", self.operations_menu)
+        fourier.setStatusTip('Fourier')
+        fourier.triggered.connect(fourier_method)
+
+        self.operations_menu.addAction(fourier)
+
+    def initialize_shape_descriptors(self, moments_and_shapes_method):
+        moments_and_shapes = QAction("&Moments and Shape Descriptors", self.operations_menu)
+        moments_and_shapes.setStatusTip('Moments and Shape Descriptors')
+        moments_and_shapes.triggered.connect(moments_and_shapes_method)
+
+        self.operations_menu.addAction(moments_and_shapes)
 
     def initialize_histogram_options(self, histogram_method, histogram_variants: dict):
         for histogram_variant in histogram_variants:
@@ -102,9 +126,4 @@ class TopMenu():
             histogram.triggered.connect(partial(histogram_method, histogram_variants[histogram_variant]))
             self.histogram_menu.addAction(histogram)
 
-    def initialize_skeletize(self, skeletize_method):
-        skeletize = QAction("&Skeletize", self.operations_menu)
-        skeletize.setStatusTip('Skeletize')
-        skeletize.triggered.connect(skeletize_method)
 
-        self.operations_menu.addAction(skeletize)

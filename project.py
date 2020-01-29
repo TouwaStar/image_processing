@@ -11,6 +11,7 @@ from histogram_window import HistogramWindow
 from top_menu import TopMenu
 
 class APO_app(QMainWindow):
+    """Main class of the applications, contains all the high level logic and initializes all the components"""
     def __init__(self, parent=None):
         super(APO_app, self).__init__(parent)
         self.setMinimumSize(1200, 400)
@@ -45,6 +46,8 @@ class APO_app(QMainWindow):
         self.top_menu.initialize_linear_filtering(self.image_window.linear_filtering)
         self.top_menu.initialize_morphology(self.image_window.morphological_operations)
         self.top_menu.initialize_segmentation(self.image_window.segmentation_operations)
+        self.top_menu.initialize_shape_descriptors(self.image_window.shape_descriptors_operations)
+        self.top_menu.initialize_fourier(self.image_window.fourier)
 
 
         self.top_menu.initialize_histogram_options(self.image_window.set_histogram, HISTOGRAMS)
@@ -53,6 +56,13 @@ class APO_app(QMainWindow):
         self.setWindowTitle("Project Apo")
 
 def main():
+    """Runs our application
+
+    2 z 3cich jest zle
+    3cie z 3cich tylko konkretne kierunki
+
+    do pokazania poprawione juz
+    """
     try:
         app = QApplication(sys.argv)
         ex = APO_app()

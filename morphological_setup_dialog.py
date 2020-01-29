@@ -12,6 +12,7 @@ from matplotlib.figure import Figure
 import numpy as np
 
 class MorphologySetupDialog(QDialog):
+    """Class responsible for handling morphological operations, opens as a window separate from main one"""
     def __init__(self,cv_image, parent = None):
         try:
             super().__init__(parent)
@@ -112,14 +113,17 @@ class MorphologySetupDialog(QDialog):
             print(f"Unable to initialize mask setup dialog {repr(e)}")
 
     def _reset_image(self):
+        """ Resets image to original value passed when initializing the class"""
         self.working_image = self.original_cv_image
         self.cv_image = self.working_image
         self.set_image()
 
     def _apply_changes(self):
+        """Applies changes from the operations to the working image so the next ones operate on their result"""
         self.working_image = self.cv_image
 
     def set_mask_layout(self, x, y):
+        """Sets the layout of the input fields for mask the user can enter"""
         for i in reversed(range(self.mask_layout.count())):
             self.mask_layout.itemAt(i).widget().setParent(None)
         self.main_layout.removeItem(self.mask_layout)
@@ -141,6 +145,7 @@ class MorphologySetupDialog(QDialog):
         self.main_layout.addLayout(self.mask_layout, 0,1)
 
     def mask_scale_changed(self):
+        """Notified when scale has changed, creates a new mask layout and auto applies the resulting filter"""
         try:
             print(f"Scale changed to {int(self.mask_scale_x.text())} {int(self.mask_scale_y.text())}")
         except:
@@ -149,6 +154,7 @@ class MorphologySetupDialog(QDialog):
         self.set_mask_layout(int(self.mask_scale_x.text()), int(self.mask_scale_y.text()))
 
     def _apply_erosion(self):
+        """Applies 1 iteration of erosion using cv2.erode and currently set border type"""
         self.cv_image = self.working_image
         try:
             self.cv_image = cv2.erode(self.cv_image, self._get_current_mask(), iterations=1,borderType=self._get_current_border_type())
@@ -157,6 +163,7 @@ class MorphologySetupDialog(QDialog):
         self.set_image()
 
     def _apply_dilation(self):
+        """Applies 1 iteration of dilation using cv2.dilate and currently set border type"""
 
         self.cv_image = self.working_image
         try:
@@ -166,6 +173,7 @@ class MorphologySetupDialog(QDialog):
         self.set_image()
 
     def _apply_opening(self):
+        """Applies 1 iteration of opening using cv2.morphologyEx with cv2.MORPH_OPEN parameter and currently set border type"""
         self.cv_image = self.working_image
         try:
             self.cv_image = cv2.morphologyEx(self.cv_image,cv2.MORPH_OPEN, self._get_current_mask(), iterations=1,borderType=self._get_current_border_type())
@@ -174,6 +182,7 @@ class MorphologySetupDialog(QDialog):
         self.set_image()
 
     def _apply_closing(self):
+        """Applies 1 iteration of closing using cv2.morphologyEx with cv2.MORPH_CLOSE parameter and currently set border type"""
         self.cv_image = self.working_image
         try:
             self.cv_image = cv2.morphologyEx(self.cv_image,cv2.MORPH_CLOSE, self._get_current_mask(), iterations=1,borderType=self._get_current_border_type())
@@ -183,6 +192,7 @@ class MorphologySetupDialog(QDialog):
 
 
     def set_image(self):
+        """Same as the method in image_window, it sets the result of operations on cv_image as displayed image"""
         try:
             height, width, channels = self.cv_image.shape
             channels = channels * width
@@ -202,9 +212,11 @@ class MorphologySetupDialog(QDialog):
         self.image_preview.setPixmap(QPixmap.fromImage(self.mq_image))
 
     def _get_current_mask(self):
+        """Returns the values currently set in the mask input fields"""
         return np.array([int(self.input_fields[x].text()) for x in range(0,int(self.mask_scale_x.text()) * int(self.mask_scale_y.text()))],np.uint8)
 
     def _get_current_border_type(self):
+        """Returns currently set border type from radio buttons"""
         border_type = None
         if self.radio_button.isChecked():
             border_type = cv2.BORDER_CONSTANT
@@ -217,4 +229,5 @@ class MorphologySetupDialog(QDialog):
         return border_type
 
     def getInputs(self):
+        """Class return value, used when the window closes and operations return to image_window"""
         return self.working_image

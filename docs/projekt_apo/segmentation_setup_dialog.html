@@ -1,0 +1,1074 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.4" />
+<title>projekt_apo.segmentation_setup_dialog API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>projekt_apo.segmentation_setup_dialog</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import cv2
+import logging as log
+
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from matplotlib import pyplot as plt
+from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
+from matplotlib.figure import Figure
+import numpy as np
+import time
+
+class SegmentationSetupDialog(QDialog):
+    def __init__(self,cv_image, parent = None):
+        try:
+            super().__init__(parent)
+            self.original_cv_image = cv_image
+            self.working_image = self.original_cv_image
+            self.cv_image = self.original_cv_image
+
+            self.main_layout = QGridLayout()
+            self.setLayout(self.main_layout)
+            self.mask_layout = QGridLayout()
+            self.input_fields = []
+            self._stop_operations = False
+            # self.main_layout.addLayout(self.mask_layout,0,1)
+
+            self.set_mask_layout(3,3)
+
+            buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
+            buttonBox.accepted.connect(self.accept)
+            buttonBox.rejected.connect(self.reject)
+
+            apply_button = QPushButton(&#34;Apply Mask&#34;)
+            apply_button.clicked.connect(self._apply_changes)
+            reset_button = QPushButton(&#34;Reset Image&#34;)
+            reset_button.clicked.connect(self._reset_image)
+
+            image_setting_layout = QHBoxLayout()
+            image_setting_layout.addWidget(apply_button)
+            image_setting_layout.addWidget(reset_button)
+
+            region_growing = QPushButton(&#34;Apply Region Growing&#34;)
+            merging = QPushButton(&#34;Apply Merging&#34;)
+            region_growing.clicked.connect(self._select_region)
+            merging.clicked.connect(self.apply_merge)
+
+            self.thresholding = QLineEdit(self)
+            self.thresholding.setText(&#39;1&#39;)
+
+
+            operations_layout = QHBoxLayout()
+            operations_layout.addWidget(region_growing)
+            operations_layout.addWidget(merging)
+            operations_layout.addWidget(self.thresholding)
+
+            self.main_layout.addWidget(buttonBox,2,1)
+            self.main_layout.addLayout(image_setting_layout,2,2)
+            self.main_layout.addLayout(operations_layout,2,0)
+
+
+
+            self.region_to_operate = 0,0
+
+
+            # self.mask_scale = QLineEdit(self)
+            # self.mask_scale.setText(&#39;1&#39;)
+            # self.mask_scale_label = QLabel(&#34;Scale&#34;)
+            # mask_scale_layout = QHBoxLayout()
+            # mask_scale_layout.addWidget(self.mask_scale_label)
+            # mask_scale_layout.addWidget(self.mask_scale)
+
+
+
+            self.image_preview = QLabel()
+            self.image_preview.setFixedSize(400, 400)
+            self.image_preview.setStyleSheet(&#34;background-color: white; border: 2px inset grey;&#34;)
+            self.image_preview.setScaledContents(True)
+            self.main_layout.addWidget(self.image_preview,0,2)
+            self.set_image()
+
+
+        except Exception as e:
+            print(f&#34;Unable to initialize mask setup dialog {repr(e)}&#34;)
+
+    def _reset_image(self):
+        self.working_image = self.original_cv_image
+        self.cv_image = self.working_image
+        self.set_image()
+        self._stop_operations = True
+
+    def _apply_changes(self):
+        self.working_image = self.cv_image
+
+    def set_mask_layout(self, x, y):
+        for i in reversed(range(self.mask_layout.count())):
+            self.mask_layout.itemAt(i).widget().setParent(None)
+        self.main_layout.removeItem(self.mask_layout)
+        self.mask_layout = QGridLayout()
+
+        self.input_fields = []
+        for i in range(0, x*y):
+            input_field = QLineEdit(self)
+            input_field.setText(&#39;1&#39;)
+            self.input_fields.append(input_field)
+
+        total = -1
+        for i in range(0, x):
+            for j in range(0, y):
+                total += 1
+                self.mask_layout.addWidget(self.input_fields[total], i, j)
+                print(f&#34;i: {i} j: {j} total: {total}&#34;)
+
+        self.main_layout.addLayout(self.mask_layout, 0,1)
+
+    def mask_scale_changed(self):
+        try:
+            print(f&#34;Scale changed to {int(self.mask_scale_x.text())} {int(self.mask_scale_y.text())}&#34;)
+        except:
+            self.mask_scale_x.setText(&#39;1&#39;)
+            self.mask_scale_y.setText(&#39;1&#39;)
+        self.set_mask_layout(int(self.mask_scale_x.text()), int(self.mask_scale_y.text()))
+
+    def on_mouse(self, event, x, y, flags, params):
+        if event == cv2.EVENT_LBUTTONDOWN:
+            self.region_to_operate = x,y
+
+    def _select_region(self):
+        try:
+            self._stop_operations = False
+            cv2.namedWindow(&#39;input&#39;)
+            cv2.setMouseCallback(&#39;input&#39;, self.on_mouse, 0)
+            cv2.imshow(&#39;input&#39;, self.working_image)
+            cv2.waitKey()
+            cv2.destroyAllWindows()
+            self.cv_image = self.region_growing(self.working_image, self.region_to_operate, int(self.thresholding.text()))
+            self.set_image()
+        except Exception as e:
+            print(f&#34;Encountered exception during segmentation algorithm {repr(e)}&#34;)
+        print(&#34;Done!&#34;)
+
+    def get8n(self, x, y, shape):
+        out = []
+        maxx = shape[1] - 1
+        maxy = shape[0] - 1
+
+        # top left
+        outx = min(max(x - 1, 0), maxx)
+        outy = min(max(y - 1, 0), maxy)
+        out.append((outx, outy))
+
+        # top center
+        outx = x
+        outy = min(max(y - 1, 0), maxy)
+        out.append((outx, outy))
+
+        # top right
+        outx = min(max(x + 1, 0), maxx)
+        outy = min(max(y - 1, 0), maxy)
+        out.append((outx, outy))
+
+        # left
+        outx = min(max(x - 1, 0), maxx)
+        outy = y
+        out.append((outx, outy))
+
+        # right
+        outx = min(max(x + 1, 0), maxx)
+        outy = y
+        out.append((outx, outy))
+
+        # bottom left
+        outx = min(max(x - 1, 0), maxx)
+        outy = min(max(y + 1, 0), maxy)
+        out.append((outx, outy))
+
+        # bottom center
+        outx = x
+        outy = min(max(y + 1, 0), maxy)
+        out.append((outx, outy))
+
+        # bottom right
+        outx = min(max(x + 1, 0), maxx)
+        outy = min(max(y + 1, 0), maxy)
+        out.append((outx, outy))
+
+        return out
+
+    def region_growing(self, img, seed, threshold=3):
+        shape = img.shape
+
+        outimg = np.zeros_like(img)
+
+        # parameters
+        mean_reg = float(img[seed[1], seed[0]])
+        size = 1
+        pix_area = shape[0] * shape[1]
+
+        contour = []
+        contour_val = []
+        dist = 0
+
+        orient = [(1, 0), (0, 1), (-1, 0), (0, -1)]  # 4 connectivity
+        cur_pix = [seed[0], seed[1]]
+
+        iter = 0
+        show_progress = 49
+
+        while dist &lt; threshold and size &lt; pix_area:
+            for j in range(4):
+                temp_pix = [cur_pix[0] + orient[j][0], cur_pix[1] + orient[j][1]]
+
+                is_in_img = shape[1] &gt; temp_pix[0] &gt; 0 and shape[0] &gt; temp_pix[1] &gt; 0
+                if is_in_img and (outimg[temp_pix[1], temp_pix[0]] == 0):
+                    contour.append(temp_pix)
+                    contour_val.append(img[temp_pix[1], temp_pix[0]])
+                    outimg[temp_pix[1], temp_pix[0]] = 150
+
+            dist_list = [abs(i - mean_reg) for i in contour_val]
+            dist = min(dist_list)
+            index = dist_list.index(min(dist_list))
+            size += 1
+            outimg[cur_pix[1], cur_pix[0]] = 255
+
+            mean_reg = (mean_reg * size + float(contour_val[index])) / (size + 1)
+
+            cur_pix = contour[index]
+
+            del contour[index]
+            del contour_val[index]
+            iter += 1
+            if iter &gt;= show_progress:
+                if self._stop_operations:
+                    self._stop_operations = False
+                    return self.cv_image
+                iter = 0
+                self.cv_image = outimg
+                print(&#34;Refreshing segmentation progress&#34;)
+                self.set_image()
+
+        return outimg
+
+    def apply_merge(self):
+        try:
+
+            self.cv_image = self._merge(self.working_image, int(self.thresholding.text()))
+            self.set_image()
+        except Exception as e:
+            print(f&#34;Encountered exception during segmentation algorithm {repr(e)}&#34;)
+        print(&#34;Done!&#34;)
+
+    def _merge(self, img, threshold=3, max_regions=4):
+        seed = [0,0]
+        shape = img.shape
+
+        out_img = np.zeros_like(img)
+        xc_img = np.zeros_like(img)
+        num_points_in_reg = [0] * max_regions
+        mean_of_reg = [0] * max_regions
+        intens_sum_of_reg = [0] * max_regions
+
+        num_of_regions = 1
+        merge = 0
+        for y in range(seed[0]+1, shape[0]-1):
+            for x in range(seed[1]+1, shape[1]-1):
+                if x==1 and y ==1:
+                    xc_img[y,x] = 1
+                    out_img[y,x] = num_of_regions
+                    num_points_in_reg[num_of_regions-1] = 1
+                    intens_sum_of_reg[num_of_regions-1] = int(img[y,x])
+                    mean_of_reg[num_of_regions-1] = img[y,x]
+                else:
+                    dmin = abs(int(img[y,x]) - mean_of_reg[0])
+                    min = 1
+
+                    for dy in range(-1,1):
+                        for dx in range(-1,2):
+                            if (((x + dx) != x) or ((y+dy) != y)) and (((y+dy) != y) or ((x + dx) != (x + 1))):
+                                if xc_img[y+dy,x+dx] != 0:
+                                    c = abs(int(img[y,x]) - mean_of_reg[xc_img[y+dy,x+dx]-1])
+                                    if c &lt; threshold:
+                                        merge = 1
+                                        if c &lt; dmin:
+                                            dmin = c
+                                            min = xc_img[y+dy,x+dx]
+
+                    if merge == 1:
+                        m = min
+                        xc_img[y,x] = m
+                        out_img[y,x] = m
+                        num_points_in_reg[m-1] +=1
+                        intens_sum_of_reg[m-1] += int(img[y,x])
+                        mean_of_reg[m-1] = int(intens_sum_of_reg[m-1]/ num_points_in_reg[m-1])
+                    if merge == 0:
+
+                        cmin = 255
+                        ml = 1
+                        for m in range(1,num_of_regions+1):
+                            c = abs(int(img[y,x]) - mean_of_reg[m-1])
+                            if c&lt;cmin:
+                                cmin = c
+                                ml = m
+                            if c &lt; threshold:
+                                merge = 1
+                                xc_img[y,x] = ml
+                                out_img[y,x] = ml
+                                num_points_in_reg[ml-1] += 1
+                                intens_sum_of_reg[ml-1] += int(img[y,x])
+                                mean_of_reg[ml-1] = int(intens_sum_of_reg[ml-1] / num_points_in_reg[ml-1])
+                        if merge == 0 and (num_of_regions &lt; max_regions):
+                            num_of_regions += 1
+                            xc_img[y,x] = num_of_regions
+                            out_img[y,x] = num_of_regions
+                            num_points_in_reg[num_of_regions-1] = 1
+                            intens_sum_of_reg[num_of_regions-1] = img[y,x]
+                            mean_of_reg[num_of_regions-1] = img[y,x]
+                        else:
+                            merge = 0
+                    else:
+                        merge = 0
+
+
+        for y in range(seed[0], shape[0]):
+            for x in range(seed[1], shape[1]):
+                for i in range(1, max_regions+1):
+                    if i==out_img[y,x]:
+                        out_img[y,x] = mean_of_reg[i-1]
+        return out_img
+
+
+
+
+
+    def set_image(self):
+        try:
+            height, width, channels = self.cv_image.shape
+            channels = channels * width
+            self.mq_image = QImage(self.cv_image, width, height, channels, QImage.Format_RGB888)
+        except:
+            height, width = self.cv_image.shape
+            # calculate the total number of bytes in the frame
+            totalBytes = self.cv_image.nbytes
+
+            # divide by the number of rows
+            bytesPerLine = int(totalBytes / height)
+            self.mq_image = QImage(self.cv_image, width, height, bytesPerLine, QImage.Format_Grayscale8)
+
+        aspect_ratio = width / height
+        self.image_preview.setFixedSize(400 * aspect_ratio, 400)
+        self.image_preview.setPixmap(QPixmap.fromImage(self.mq_image))
+        QApplication.processEvents()
+
+    def _get_current_mask(self):
+        return np.array([int(self.input_fields[x].text()) for x in range(0,int(self.mask_scale_x.text()) * int(self.mask_scale_y.text()))],np.uint8)
+
+    def _get_current_border_type(self):
+        border_type = None
+        if self.radio_button.isChecked():
+            border_type = cv2.BORDER_CONSTANT
+        elif self.radio_button2.isChecked():
+            border_type = cv2.BORDER_REPLICATE
+        elif self.radio_button3.isChecked():
+            border_type = cv2.BORDER_REFLECT
+
+        print(f&#34;Border type {border_type}&#34;)
+        return border_type
+
+    def getInputs(self):
+        return self.working_image</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog"><code class="flex name class">
+<span>class <span class="ident">SegmentationSetupDialog</span></span>
+<span>(</span><span>cv_image, parent=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>QDialog(parent: QWidget = None, flags: Union[Qt.WindowFlags, Qt.WindowType] = Qt.WindowFlags())</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SegmentationSetupDialog(QDialog):
+    def __init__(self,cv_image, parent = None):
+        try:
+            super().__init__(parent)
+            self.original_cv_image = cv_image
+            self.working_image = self.original_cv_image
+            self.cv_image = self.original_cv_image
+
+            self.main_layout = QGridLayout()
+            self.setLayout(self.main_layout)
+            self.mask_layout = QGridLayout()
+            self.input_fields = []
+            self._stop_operations = False
+            # self.main_layout.addLayout(self.mask_layout,0,1)
+
+            self.set_mask_layout(3,3)
+
+            buttonBox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel, self)
+            buttonBox.accepted.connect(self.accept)
+            buttonBox.rejected.connect(self.reject)
+
+            apply_button = QPushButton(&#34;Apply Mask&#34;)
+            apply_button.clicked.connect(self._apply_changes)
+            reset_button = QPushButton(&#34;Reset Image&#34;)
+            reset_button.clicked.connect(self._reset_image)
+
+            image_setting_layout = QHBoxLayout()
+            image_setting_layout.addWidget(apply_button)
+            image_setting_layout.addWidget(reset_button)
+
+            region_growing = QPushButton(&#34;Apply Region Growing&#34;)
+            merging = QPushButton(&#34;Apply Merging&#34;)
+            region_growing.clicked.connect(self._select_region)
+            merging.clicked.connect(self.apply_merge)
+
+            self.thresholding = QLineEdit(self)
+            self.thresholding.setText(&#39;1&#39;)
+
+
+            operations_layout = QHBoxLayout()
+            operations_layout.addWidget(region_growing)
+            operations_layout.addWidget(merging)
+            operations_layout.addWidget(self.thresholding)
+
+            self.main_layout.addWidget(buttonBox,2,1)
+            self.main_layout.addLayout(image_setting_layout,2,2)
+            self.main_layout.addLayout(operations_layout,2,0)
+
+
+
+            self.region_to_operate = 0,0
+
+
+            # self.mask_scale = QLineEdit(self)
+            # self.mask_scale.setText(&#39;1&#39;)
+            # self.mask_scale_label = QLabel(&#34;Scale&#34;)
+            # mask_scale_layout = QHBoxLayout()
+            # mask_scale_layout.addWidget(self.mask_scale_label)
+            # mask_scale_layout.addWidget(self.mask_scale)
+
+
+
+            self.image_preview = QLabel()
+            self.image_preview.setFixedSize(400, 400)
+            self.image_preview.setStyleSheet(&#34;background-color: white; border: 2px inset grey;&#34;)
+            self.image_preview.setScaledContents(True)
+            self.main_layout.addWidget(self.image_preview,0,2)
+            self.set_image()
+
+
+        except Exception as e:
+            print(f&#34;Unable to initialize mask setup dialog {repr(e)}&#34;)
+
+    def _reset_image(self):
+        self.working_image = self.original_cv_image
+        self.cv_image = self.working_image
+        self.set_image()
+        self._stop_operations = True
+
+    def _apply_changes(self):
+        self.working_image = self.cv_image
+
+    def set_mask_layout(self, x, y):
+        for i in reversed(range(self.mask_layout.count())):
+            self.mask_layout.itemAt(i).widget().setParent(None)
+        self.main_layout.removeItem(self.mask_layout)
+        self.mask_layout = QGridLayout()
+
+        self.input_fields = []
+        for i in range(0, x*y):
+            input_field = QLineEdit(self)
+            input_field.setText(&#39;1&#39;)
+            self.input_fields.append(input_field)
+
+        total = -1
+        for i in range(0, x):
+            for j in range(0, y):
+                total += 1
+                self.mask_layout.addWidget(self.input_fields[total], i, j)
+                print(f&#34;i: {i} j: {j} total: {total}&#34;)
+
+        self.main_layout.addLayout(self.mask_layout, 0,1)
+
+    def mask_scale_changed(self):
+        try:
+            print(f&#34;Scale changed to {int(self.mask_scale_x.text())} {int(self.mask_scale_y.text())}&#34;)
+        except:
+            self.mask_scale_x.setText(&#39;1&#39;)
+            self.mask_scale_y.setText(&#39;1&#39;)
+        self.set_mask_layout(int(self.mask_scale_x.text()), int(self.mask_scale_y.text()))
+
+    def on_mouse(self, event, x, y, flags, params):
+        if event == cv2.EVENT_LBUTTONDOWN:
+            self.region_to_operate = x,y
+
+    def _select_region(self):
+        try:
+            self._stop_operations = False
+            cv2.namedWindow(&#39;input&#39;)
+            cv2.setMouseCallback(&#39;input&#39;, self.on_mouse, 0)
+            cv2.imshow(&#39;input&#39;, self.working_image)
+            cv2.waitKey()
+            cv2.destroyAllWindows()
+            self.cv_image = self.region_growing(self.working_image, self.region_to_operate, int(self.thresholding.text()))
+            self.set_image()
+        except Exception as e:
+            print(f&#34;Encountered exception during segmentation algorithm {repr(e)}&#34;)
+        print(&#34;Done!&#34;)
+
+    def get8n(self, x, y, shape):
+        out = []
+        maxx = shape[1] - 1
+        maxy = shape[0] - 1
+
+        # top left
+        outx = min(max(x - 1, 0), maxx)
+        outy = min(max(y - 1, 0), maxy)
+        out.append((outx, outy))
+
+        # top center
+        outx = x
+        outy = min(max(y - 1, 0), maxy)
+        out.append((outx, outy))
+
+        # top right
+        outx = min(max(x + 1, 0), maxx)
+        outy = min(max(y - 1, 0), maxy)
+        out.append((outx, outy))
+
+        # left
+        outx = min(max(x - 1, 0), maxx)
+        outy = y
+        out.append((outx, outy))
+
+        # right
+        outx = min(max(x + 1, 0), maxx)
+        outy = y
+        out.append((outx, outy))
+
+        # bottom left
+        outx = min(max(x - 1, 0), maxx)
+        outy = min(max(y + 1, 0), maxy)
+        out.append((outx, outy))
+
+        # bottom center
+        outx = x
+        outy = min(max(y + 1, 0), maxy)
+        out.append((outx, outy))
+
+        # bottom right
+        outx = min(max(x + 1, 0), maxx)
+        outy = min(max(y + 1, 0), maxy)
+        out.append((outx, outy))
+
+        return out
+
+    def region_growing(self, img, seed, threshold=3):
+        shape = img.shape
+
+        outimg = np.zeros_like(img)
+
+        # parameters
+        mean_reg = float(img[seed[1], seed[0]])
+        size = 1
+        pix_area = shape[0] * shape[1]
+
+        contour = []
+        contour_val = []
+        dist = 0
+
+        orient = [(1, 0), (0, 1), (-1, 0), (0, -1)]  # 4 connectivity
+        cur_pix = [seed[0], seed[1]]
+
+        iter = 0
+        show_progress = 49
+
+        while dist &lt; threshold and size &lt; pix_area:
+            for j in range(4):
+                temp_pix = [cur_pix[0] + orient[j][0], cur_pix[1] + orient[j][1]]
+
+                is_in_img = shape[1] &gt; temp_pix[0] &gt; 0 and shape[0] &gt; temp_pix[1] &gt; 0
+                if is_in_img and (outimg[temp_pix[1], temp_pix[0]] == 0):
+                    contour.append(temp_pix)
+                    contour_val.append(img[temp_pix[1], temp_pix[0]])
+                    outimg[temp_pix[1], temp_pix[0]] = 150
+
+            dist_list = [abs(i - mean_reg) for i in contour_val]
+            dist = min(dist_list)
+            index = dist_list.index(min(dist_list))
+            size += 1
+            outimg[cur_pix[1], cur_pix[0]] = 255
+
+            mean_reg = (mean_reg * size + float(contour_val[index])) / (size + 1)
+
+            cur_pix = contour[index]
+
+            del contour[index]
+            del contour_val[index]
+            iter += 1
+            if iter &gt;= show_progress:
+                if self._stop_operations:
+                    self._stop_operations = False
+                    return self.cv_image
+                iter = 0
+                self.cv_image = outimg
+                print(&#34;Refreshing segmentation progress&#34;)
+                self.set_image()
+
+        return outimg
+
+    def apply_merge(self):
+        try:
+
+            self.cv_image = self._merge(self.working_image, int(self.thresholding.text()))
+            self.set_image()
+        except Exception as e:
+            print(f&#34;Encountered exception during segmentation algorithm {repr(e)}&#34;)
+        print(&#34;Done!&#34;)
+
+    def _merge(self, img, threshold=3, max_regions=4):
+        seed = [0,0]
+        shape = img.shape
+
+        out_img = np.zeros_like(img)
+        xc_img = np.zeros_like(img)
+        num_points_in_reg = [0] * max_regions
+        mean_of_reg = [0] * max_regions
+        intens_sum_of_reg = [0] * max_regions
+
+        num_of_regions = 1
+        merge = 0
+        for y in range(seed[0]+1, shape[0]-1):
+            for x in range(seed[1]+1, shape[1]-1):
+                if x==1 and y ==1:
+                    xc_img[y,x] = 1
+                    out_img[y,x] = num_of_regions
+                    num_points_in_reg[num_of_regions-1] = 1
+                    intens_sum_of_reg[num_of_regions-1] = int(img[y,x])
+                    mean_of_reg[num_of_regions-1] = img[y,x]
+                else:
+                    dmin = abs(int(img[y,x]) - mean_of_reg[0])
+                    min = 1
+
+                    for dy in range(-1,1):
+                        for dx in range(-1,2):
+                            if (((x + dx) != x) or ((y+dy) != y)) and (((y+dy) != y) or ((x + dx) != (x + 1))):
+                                if xc_img[y+dy,x+dx] != 0:
+                                    c = abs(int(img[y,x]) - mean_of_reg[xc_img[y+dy,x+dx]-1])
+                                    if c &lt; threshold:
+                                        merge = 1
+                                        if c &lt; dmin:
+                                            dmin = c
+                                            min = xc_img[y+dy,x+dx]
+
+                    if merge == 1:
+                        m = min
+                        xc_img[y,x] = m
+                        out_img[y,x] = m
+                        num_points_in_reg[m-1] +=1
+                        intens_sum_of_reg[m-1] += int(img[y,x])
+                        mean_of_reg[m-1] = int(intens_sum_of_reg[m-1]/ num_points_in_reg[m-1])
+                    if merge == 0:
+
+                        cmin = 255
+                        ml = 1
+                        for m in range(1,num_of_regions+1):
+                            c = abs(int(img[y,x]) - mean_of_reg[m-1])
+                            if c&lt;cmin:
+                                cmin = c
+                                ml = m
+                            if c &lt; threshold:
+                                merge = 1
+                                xc_img[y,x] = ml
+                                out_img[y,x] = ml
+                                num_points_in_reg[ml-1] += 1
+                                intens_sum_of_reg[ml-1] += int(img[y,x])
+                                mean_of_reg[ml-1] = int(intens_sum_of_reg[ml-1] / num_points_in_reg[ml-1])
+                        if merge == 0 and (num_of_regions &lt; max_regions):
+                            num_of_regions += 1
+                            xc_img[y,x] = num_of_regions
+                            out_img[y,x] = num_of_regions
+                            num_points_in_reg[num_of_regions-1] = 1
+                            intens_sum_of_reg[num_of_regions-1] = img[y,x]
+                            mean_of_reg[num_of_regions-1] = img[y,x]
+                        else:
+                            merge = 0
+                    else:
+                        merge = 0
+
+
+        for y in range(seed[0], shape[0]):
+            for x in range(seed[1], shape[1]):
+                for i in range(1, max_regions+1):
+                    if i==out_img[y,x]:
+                        out_img[y,x] = mean_of_reg[i-1]
+        return out_img
+
+
+
+
+
+    def set_image(self):
+        try:
+            height, width, channels = self.cv_image.shape
+            channels = channels * width
+            self.mq_image = QImage(self.cv_image, width, height, channels, QImage.Format_RGB888)
+        except:
+            height, width = self.cv_image.shape
+            # calculate the total number of bytes in the frame
+            totalBytes = self.cv_image.nbytes
+
+            # divide by the number of rows
+            bytesPerLine = int(totalBytes / height)
+            self.mq_image = QImage(self.cv_image, width, height, bytesPerLine, QImage.Format_Grayscale8)
+
+        aspect_ratio = width / height
+        self.image_preview.setFixedSize(400 * aspect_ratio, 400)
+        self.image_preview.setPixmap(QPixmap.fromImage(self.mq_image))
+        QApplication.processEvents()
+
+    def _get_current_mask(self):
+        return np.array([int(self.input_fields[x].text()) for x in range(0,int(self.mask_scale_x.text()) * int(self.mask_scale_y.text()))],np.uint8)
+
+    def _get_current_border_type(self):
+        border_type = None
+        if self.radio_button.isChecked():
+            border_type = cv2.BORDER_CONSTANT
+        elif self.radio_button2.isChecked():
+            border_type = cv2.BORDER_REPLICATE
+        elif self.radio_button3.isChecked():
+            border_type = cv2.BORDER_REFLECT
+
+        print(f&#34;Border type {border_type}&#34;)
+        return border_type
+
+    def getInputs(self):
+        return self.working_image</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>PyQt5.QtWidgets.QDialog</li>
+<li>PyQt5.QtWidgets.QWidget</li>
+<li>PyQt5.QtCore.QObject</li>
+<li>sip.wrapper</li>
+<li>PyQt5.QtGui.QPaintDevice</li>
+<li>sip.simplewrapper</li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.apply_merge"><code class="name flex">
+<span>def <span class="ident">apply_merge</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def apply_merge(self):
+    try:
+
+        self.cv_image = self._merge(self.working_image, int(self.thresholding.text()))
+        self.set_image()
+    except Exception as e:
+        print(f&#34;Encountered exception during segmentation algorithm {repr(e)}&#34;)
+    print(&#34;Done!&#34;)</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.get8n"><code class="name flex">
+<span>def <span class="ident">get8n</span></span>(<span>self, x, y, shape)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get8n(self, x, y, shape):
+    out = []
+    maxx = shape[1] - 1
+    maxy = shape[0] - 1
+
+    # top left
+    outx = min(max(x - 1, 0), maxx)
+    outy = min(max(y - 1, 0), maxy)
+    out.append((outx, outy))
+
+    # top center
+    outx = x
+    outy = min(max(y - 1, 0), maxy)
+    out.append((outx, outy))
+
+    # top right
+    outx = min(max(x + 1, 0), maxx)
+    outy = min(max(y - 1, 0), maxy)
+    out.append((outx, outy))
+
+    # left
+    outx = min(max(x - 1, 0), maxx)
+    outy = y
+    out.append((outx, outy))
+
+    # right
+    outx = min(max(x + 1, 0), maxx)
+    outy = y
+    out.append((outx, outy))
+
+    # bottom left
+    outx = min(max(x - 1, 0), maxx)
+    outy = min(max(y + 1, 0), maxy)
+    out.append((outx, outy))
+
+    # bottom center
+    outx = x
+    outy = min(max(y + 1, 0), maxy)
+    out.append((outx, outy))
+
+    # bottom right
+    outx = min(max(x + 1, 0), maxx)
+    outy = min(max(y + 1, 0), maxy)
+    out.append((outx, outy))
+
+    return out</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.getInputs"><code class="name flex">
+<span>def <span class="ident">getInputs</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getInputs(self):
+    return self.working_image</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.mask_scale_changed"><code class="name flex">
+<span>def <span class="ident">mask_scale_changed</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mask_scale_changed(self):
+    try:
+        print(f&#34;Scale changed to {int(self.mask_scale_x.text())} {int(self.mask_scale_y.text())}&#34;)
+    except:
+        self.mask_scale_x.setText(&#39;1&#39;)
+        self.mask_scale_y.setText(&#39;1&#39;)
+    self.set_mask_layout(int(self.mask_scale_x.text()), int(self.mask_scale_y.text()))</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.on_mouse"><code class="name flex">
+<span>def <span class="ident">on_mouse</span></span>(<span>self, event, x, y, flags, params)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def on_mouse(self, event, x, y, flags, params):
+    if event == cv2.EVENT_LBUTTONDOWN:
+        self.region_to_operate = x,y</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.region_growing"><code class="name flex">
+<span>def <span class="ident">region_growing</span></span>(<span>self, img, seed, threshold=3)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def region_growing(self, img, seed, threshold=3):
+    shape = img.shape
+
+    outimg = np.zeros_like(img)
+
+    # parameters
+    mean_reg = float(img[seed[1], seed[0]])
+    size = 1
+    pix_area = shape[0] * shape[1]
+
+    contour = []
+    contour_val = []
+    dist = 0
+
+    orient = [(1, 0), (0, 1), (-1, 0), (0, -1)]  # 4 connectivity
+    cur_pix = [seed[0], seed[1]]
+
+    iter = 0
+    show_progress = 49
+
+    while dist &lt; threshold and size &lt; pix_area:
+        for j in range(4):
+            temp_pix = [cur_pix[0] + orient[j][0], cur_pix[1] + orient[j][1]]
+
+            is_in_img = shape[1] &gt; temp_pix[0] &gt; 0 and shape[0] &gt; temp_pix[1] &gt; 0
+            if is_in_img and (outimg[temp_pix[1], temp_pix[0]] == 0):
+                contour.append(temp_pix)
+                contour_val.append(img[temp_pix[1], temp_pix[0]])
+                outimg[temp_pix[1], temp_pix[0]] = 150
+
+        dist_list = [abs(i - mean_reg) for i in contour_val]
+        dist = min(dist_list)
+        index = dist_list.index(min(dist_list))
+        size += 1
+        outimg[cur_pix[1], cur_pix[0]] = 255
+
+        mean_reg = (mean_reg * size + float(contour_val[index])) / (size + 1)
+
+        cur_pix = contour[index]
+
+        del contour[index]
+        del contour_val[index]
+        iter += 1
+        if iter &gt;= show_progress:
+            if self._stop_operations:
+                self._stop_operations = False
+                return self.cv_image
+            iter = 0
+            self.cv_image = outimg
+            print(&#34;Refreshing segmentation progress&#34;)
+            self.set_image()
+
+    return outimg</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.set_image"><code class="name flex">
+<span>def <span class="ident">set_image</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_image(self):
+    try:
+        height, width, channels = self.cv_image.shape
+        channels = channels * width
+        self.mq_image = QImage(self.cv_image, width, height, channels, QImage.Format_RGB888)
+    except:
+        height, width = self.cv_image.shape
+        # calculate the total number of bytes in the frame
+        totalBytes = self.cv_image.nbytes
+
+        # divide by the number of rows
+        bytesPerLine = int(totalBytes / height)
+        self.mq_image = QImage(self.cv_image, width, height, bytesPerLine, QImage.Format_Grayscale8)
+
+    aspect_ratio = width / height
+    self.image_preview.setFixedSize(400 * aspect_ratio, 400)
+    self.image_preview.setPixmap(QPixmap.fromImage(self.mq_image))
+    QApplication.processEvents()</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.set_mask_layout"><code class="name flex">
+<span>def <span class="ident">set_mask_layout</span></span>(<span>self, x, y)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_mask_layout(self, x, y):
+    for i in reversed(range(self.mask_layout.count())):
+        self.mask_layout.itemAt(i).widget().setParent(None)
+    self.main_layout.removeItem(self.mask_layout)
+    self.mask_layout = QGridLayout()
+
+    self.input_fields = []
+    for i in range(0, x*y):
+        input_field = QLineEdit(self)
+        input_field.setText(&#39;1&#39;)
+        self.input_fields.append(input_field)
+
+    total = -1
+    for i in range(0, x):
+        for j in range(0, y):
+            total += 1
+            self.mask_layout.addWidget(self.input_fields[total], i, j)
+            print(f&#34;i: {i} j: {j} total: {total}&#34;)
+
+    self.main_layout.addLayout(self.mask_layout, 0,1)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="projekt_apo" href="index.html">projekt_apo</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog" href="#projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog">SegmentationSetupDialog</a></code></h4>
+<ul class="two-column">
+<li><code><a title="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.apply_merge" href="#projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.apply_merge">apply_merge</a></code></li>
+<li><code><a title="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.get8n" href="#projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.get8n">get8n</a></code></li>
+<li><code><a title="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.getInputs" href="#projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.getInputs">getInputs</a></code></li>
+<li><code><a title="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.mask_scale_changed" href="#projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.mask_scale_changed">mask_scale_changed</a></code></li>
+<li><code><a title="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.on_mouse" href="#projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.on_mouse">on_mouse</a></code></li>
+<li><code><a title="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.region_growing" href="#projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.region_growing">region_growing</a></code></li>
+<li><code><a title="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.set_image" href="#projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.set_image">set_image</a></code></li>
+<li><code><a title="projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.set_mask_layout" href="#projekt_apo.segmentation_setup_dialog.SegmentationSetupDialog.set_mask_layout">set_mask_layout</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.4</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

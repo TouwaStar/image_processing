@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.4" />
+<title>projekt_apo.image_window API documentation</title>
+<meta name="description" content="" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>projekt_apo.image_window</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import cv2
+import logging as log
+
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *
+from matplotlib import pyplot as plt
+from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
+from matplotlib.figure import Figure
+import numpy as np
+from mask_setup_dialog import MaskSetupDialog
+from morphological_setup_dialog import MorphologySetupDialog
+from segmentation_setup_dialog import SegmentationSetupDialog
+from shape_descriptors_dialog import ShapeDescriptorsDialog
+from fourier_dialog import FourierDialog
+
+
+class ImageWindow():
+    &#34;&#34;&#34;Main image window, class responsible for displaying the image to the user.&#34;&#34;&#34;
+    def __init__(self, main_window):
+        self.main_window = main_window
+        self._original_image = None
+        self.cv_image = None
+        self.mq_image = None
+
+        contents = QLabel()
+        contents.setFixedSize(400, 400)
+
+        contents.setStyleSheet(&#34;background-color: white; border: 2px inset grey;&#34;)
+        contents.setScaledContents(True)
+
+        self.image = contents
+
+    def reset_image(self):
+        &#34;&#34;&#34;Resets the image to the state it was when loaded from file&#34;&#34;&#34;
+        self.cv_image = self._original_image
+        self._set_image()
+
+    def set_image_from_file(self):
+        &#34;&#34;&#34;Loads a new image from file, performs BGR2RGB conversion for compatibility with pyqt and most operations&#34;&#34;&#34;
+        try:
+            fname = QFileDialog.getOpenFileName(self.main_window, &#39;Open file&#39;,
+                                                &#39;c:\\&#39;, &#34;Image files (*.jpg *.gif *.tif *.png *.bmp)&#34;)[0]
+
+            print(f&#34;Opening {fname}&#34;)
+            self.cv_image = cv2.imread(fname)
+            cv2.cvtColor(self.cv_image, cv2.COLOR_BGR2RGB, self.cv_image)
+
+            self._original_image = self.cv_image
+            self._set_image()
+        except Exception as e:
+            log.error(repr(e))
+
+    def save_image_to_file(self):
+        &#34;&#34;&#34;Saves image to specified location in specified format, available options include jpg png and anything else that cv2.imwrite allows&#34;&#34;&#34;
+        try:
+            fname = QFileDialog.getSaveFileName(self.main_window, &#39;Save file&#39;,
+                                                &#39;c:\\&#39;, &#34;Image files (*.jpg *.png, *.bmp)&#34;)[0]
+            print(f&#34;Saving image to {fname}&#34;)
+            cv2.imwrite(fname,self.cv_image)
+
+        except Exception as e:
+            log.error(repr(e))
+
+    def _set_image(self):
+        &#34;&#34;&#34;Used by other methods to display the new cv image to user, auto handles colour and grayscale.
+        Takes into consideration QImage bytes_per_line misscalculations&#34;&#34;&#34;
+        try:
+            # print(self.cv_image)
+            try:
+                height, width, channels = self.cv_image.shape
+                channels = channels * width
+                print(&#34;Colour image&#34;)
+                self.mq_image = QImage(self.cv_image, width, height, channels, QImage.Format_RGB888)
+            except:
+                height, width = self.cv_image.shape
+                # calculate the total number of bytes in the frame
+                totalBytes = self.cv_image.nbytes
+
+                # divide by the number of rows
+                bytesPerLine = int(totalBytes / height)
+                print(&#34;Grayscale image&#34;)
+                self.mq_image = QImage(self.cv_image, width, height, bytesPerLine, QImage.Format_Grayscale8)
+
+            aspect_ratio = width/height
+            self.image.setFixedSize(400 * aspect_ratio, 400)
+            self.image.setPixmap(QPixmap.fromImage(self.mq_image))
+
+            self.set_histogram(None)
+        except Exception as e:
+            print(repr(e))
+
+    def negate_image(self):
+        &#34;&#34;&#34;Creates a bitwise not of current image and sets&#34;&#34;&#34;
+        self.cv_image = cv2.bitwise_not(self.cv_image)
+        self._set_image()
+
+    def threshold_image(self, type, thresholding_values=None):
+        &#34;&#34;&#34;Thresholds image to specified values&#34;&#34;&#34;
+        print(f&#34;Performing Thresholding of type {type}&#34;)
+        try:
+            if thresholding_values is None:
+                num, ok = QInputDialog.getInt(self.main_window, &#34;Thresholding dialog&#34;, &#34;enter thresholding start&#34;)
+                num2, ok = QInputDialog.getInt(self.main_window, &#34;Thresholding dialog&#34;, &#34;enter thresholding end&#34;)
+            else:
+                num = thresholding_values[0]
+                num2 = thresholding_values[1]
+                ok = True
+
+            gray = cv2.cvtColor(self.cv_image, cv2.COLOR_RGB2GRAY)
+            self.cv_image = gray
+            if ok:
+                print(f&#34;Thresholding with values {num} {num2}&#34;)
+                ret, self.cv_image = cv2.threshold(gray, num, num2, type)
+                self._set_image()
+        except Exception as e:
+            print(f&#34;Thresholding failed, retrying as gray image&#34;)
+            try:
+                if thresholding_values is None:
+                    num, ok = QInputDialog.getInt(self.main_window, &#34;Thresholding dialog&#34;, &#34;enter thresholding start&#34;)
+                    num2, ok = QInputDialog.getInt(self.main_window, &#34;Thresholding dialog&#34;, &#34;enter thresholding end&#34;)
+                else:
+                    num = thresholding_values[0]
+                    num2 = thresholding_values[1]
+                    ok = True
+
+                if ok:
+                    print(f&#34;Thresholding with values {num} {num2}&#34;)
+                    ret, self.cv_image = cv2.threshold(self.cv_image, num, num2, type)
+                    self._set_image()
+            except Exception as e:
+                print(f&#34;Thresholding failed with error {repr(e)}&#34;)
+
+    def set_histogram(self, type):
+        &#34;&#34;&#34;Sets histogram of provided type, only functionality is calling the histogram_window set_histogram method&#34;&#34;&#34;
+        print(type)
+        self.main_window.histogram_window.set_histogram(self.cv_image, type)
+
+    def change_to_grayscale(self):
+        &#34;&#34;&#34;Converts image to grayscale by RGB2GRAY&#34;&#34;&#34;
+        try:
+            gray = cv2.cvtColor(self.cv_image, cv2.COLOR_RGB2GRAY)
+        except:
+            print(f&#34;Unable to convert to grayscale, image possibly already in grayscale&#34;)
+            return
+        self.cv_image = gray
+        self._set_image()
+
+    def equalize_histogram(self):
+        &#34;&#34;&#34;Equalizes histogram using cv2.equalizeHist, autohandles grayscale&#34;&#34;&#34;
+        try:
+            cv2.equalizeHist(self.cv_image, self.cv_image)
+            self._set_image()
+        except Exception as e:
+            print(f&#34;Equalizing histogram failed with error {repr(e)} image probably not in grayscale retrying&#34;)
+            self.change_to_grayscale()
+            cv2.equalizeHist(self.cv_image, self.cv_image)
+            self._set_image()
+
+    def stretch_histogram(self):
+        &#34;&#34;&#34;Stretches histogram by use of
+
+            minmax_img = np.zeros((self.cv_image.shape[0], self.cv_image.shape[1]), dtype=&#39;uint8&#39;)
+
+            # Loop over the image and apply Min-Max formulae
+
+            min = np.min(self.cv_image)
+            max = np.max(self.cv_image)
+
+            for i in range(self.cv_image.shape[0]):
+                for j in range(self.cv_image.shape[1]):
+                    minmax_img[i, j] = 255 * (self.cv_image[i, j] - min) / (max - min)
+            self.cv_image = minmax_img
+
+        algorithm
+        &#34;&#34;&#34;
+        try:
+            minmax_img = np.zeros((self.cv_image.shape[0], self.cv_image.shape[1]), dtype=&#39;uint8&#39;)
+
+            # Loop over the image and apply Min-Max formulae
+
+            min = np.min(self.cv_image)
+            max = np.max(self.cv_image)
+
+            for i in range(self.cv_image.shape[0]):
+                for j in range(self.cv_image.shape[1]):
+                    minmax_img[i, j] = 255 * (self.cv_image[i, j] - min) / (max - min)
+            self.cv_image = minmax_img
+
+            self._set_image()
+
+        except Exception as e:
+            print(f&#34;Exception while stretching histogram {repr(e)}&#34;)
+
+            self.change_to_grayscale()
+            self.stretch_histogram()
+
+    def linear_filtering(self):
+        &#34;&#34;&#34;Opens dialog for linear operations and applies the return value&#34;&#34;&#34;
+        try:
+            dialog = MaskSetupDialog(self.cv_image)
+
+            if dialog.exec():
+                self.cv_image = dialog.getInputs()
+                self._set_image()
+        except Exception as e:
+            print(f&#34;Exception using mask seutp dialog {repr(e)}&#34;)
+
+    def morphological_operations(self):
+        &#34;&#34;&#34;Opens dialog for morphological operations and applies the return value&#34;&#34;&#34;
+        dialog = MorphologySetupDialog(self.cv_image)
+
+        if dialog.exec():
+            self.cv_image = dialog.getInputs()
+            self._set_image()
+
+    def segmentation_operations(self):
+        &#34;&#34;&#34;Opens dialog for segmentation operations and applies the return value&#34;&#34;&#34;
+        self.change_to_grayscale()
+        dialog = SegmentationSetupDialog(self.cv_image)
+
+        if dialog.exec():
+            self.cv_image = dialog.getInputs()
+            self._set_image()
+
+    def shape_descriptors_operations(self):
+        self.change_to_grayscale()
+        self._set_image()
+        self.threshold_image(cv2.THRESH_BINARY, [0, 255])
+        self._set_image()
+        dialog = ShapeDescriptorsDialog(self.cv_image)
+        dialog.exec()
+
+    def skeletize(self):
+        &#34;&#34;&#34;Applies skeletization, keeps replicate border type throughout the operation,
+        works for bright text/objects on dark backgrounds&#34;&#34;&#34;
+        img = self.cv_image
+
+        skeleton = np.zeros(img.shape, np.uint8)
+        eroded = np.zeros(img.shape, np.uint8)
+        temp = np.zeros(img.shape, np.uint8)
+
+        _, thresh = cv2.threshold(img, 127, 255, 0)
+
+        kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))
+
+        iters = 0
+        while True:
+            cv2.erode(thresh, kernel, eroded, borderType=cv2.BORDER_REPLICATE)
+            cv2.dilate(eroded, kernel, temp, borderType=cv2.BORDER_REPLICATE)
+            cv2.subtract(thresh, temp, temp)
+            cv2.bitwise_or(skeleton, temp, skeleton)
+            thresh, eroded = eroded, thresh  # Swap instead of copy
+
+            iters += 1
+            if cv2.countNonZero(thresh) == 0:
+                self.cv_image = skeleton
+                self._set_image()
+                return
+
+    def fourier(self):
+        &#34;&#34;&#34;Initialize dialog for fourier transformation and apply the effect to current image&#34;&#34;&#34;
+        dialog = FourierDialog(self.cv_image)
+
+        if dialog.exec():
+            self.cv_image = dialog.getInputs()
+            self._set_image()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="projekt_apo.image_window.ImageWindow"><code class="flex name class">
+<span>class <span class="ident">ImageWindow</span></span>
+<span>(</span><span>main_window)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Main image window, class responsible for displaying the image to the user.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ImageWindow():
+    &#34;&#34;&#34;Main image window, class responsible for displaying the image to the user.&#34;&#34;&#34;
+    def __init__(self, main_window):
+        self.main_window = main_window
+        self._original_image = None
+        self.cv_image = None
+        self.mq_image = None
+
+        contents = QLabel()
+        contents.setFixedSize(400, 400)
+
+        contents.setStyleSheet(&#34;background-color: white; border: 2px inset grey;&#34;)
+        contents.setScaledContents(True)
+
+        self.image = contents
+
+    def reset_image(self):
+        &#34;&#34;&#34;Resets the image to the state it was when loaded from file&#34;&#34;&#34;
+        self.cv_image = self._original_image
+        self._set_image()
+
+    def set_image_from_file(self):
+        &#34;&#34;&#34;Loads a new image from file, performs BGR2RGB conversion for compatibility with pyqt and most operations&#34;&#34;&#34;
+        try:
+            fname = QFileDialog.getOpenFileName(self.main_window, &#39;Open file&#39;,
+                                                &#39;c:\\&#39;, &#34;Image files (*.jpg *.gif *.tif *.png *.bmp)&#34;)[0]
+
+            print(f&#34;Opening {fname}&#34;)
+            self.cv_image = cv2.imread(fname)
+            cv2.cvtColor(self.cv_image, cv2.COLOR_BGR2RGB, self.cv_image)
+
+            self._original_image = self.cv_image
+            self._set_image()
+        except Exception as e:
+            log.error(repr(e))
+
+    def save_image_to_file(self):
+        &#34;&#34;&#34;Saves image to specified location in specified format, available options include jpg png and anything else that cv2.imwrite allows&#34;&#34;&#34;
+        try:
+            fname = QFileDialog.getSaveFileName(self.main_window, &#39;Save file&#39;,
+                                                &#39;c:\\&#39;, &#34;Image files (*.jpg *.png, *.bmp)&#34;)[0]
+            print(f&#34;Saving image to {fname}&#34;)
+            cv2.imwrite(fname,self.cv_image)
+
+        except Exception as e:
+            log.error(repr(e))
+
+    def _set_image(self):
+        &#34;&#34;&#34;Used by other methods to display the new cv image to user, auto handles colour and grayscale.
+        Takes into consideration QImage bytes_per_line misscalculations&#34;&#34;&#34;
+        try:
+            # print(self.cv_image)
+            try:
+                height, width, channels = self.cv_image.shape
+                channels = channels * width
+                print(&#34;Colour image&#34;)
+                self.mq_image = QImage(self.cv_image, width, height, channels, QImage.Format_RGB888)
+            except:
+                height, width = self.cv_image.shape
+                # calculate the total number of bytes in the frame
+                totalBytes = self.cv_image.nbytes
+
+                # divide by the number of rows
+                bytesPerLine = int(totalBytes / height)
+                print(&#34;Grayscale image&#34;)
+                self.mq_image = QImage(self.cv_image, width, height, bytesPerLine, QImage.Format_Grayscale8)
+
+            aspect_ratio = width/height
+            self.image.setFixedSize(400 * aspect_ratio, 400)
+            self.image.setPixmap(QPixmap.fromImage(self.mq_image))
+
+            self.set_histogram(None)
+        except Exception as e:
+            print(repr(e))
+
+    def negate_image(self):
+        &#34;&#34;&#34;Creates a bitwise not of current image and sets&#34;&#34;&#34;
+        self.cv_image = cv2.bitwise_not(self.cv_image)
+        self._set_image()
+
+    def threshold_image(self, type, thresholding_values=None):
+        &#34;&#34;&#34;Thresholds image to specified values&#34;&#34;&#34;
+        print(f&#34;Performing Thresholding of type {type}&#34;)
+        try:
+            if thresholding_values is None:
+                num, ok = QInputDialog.getInt(self.main_window, &#34;Thresholding dialog&#34;, &#34;enter thresholding start&#34;)
+                num2, ok = QInputDialog.getInt(self.main_window, &#34;Thresholding dialog&#34;, &#34;enter thresholding end&#34;)
+            else:
+                num = thresholding_values[0]
+                num2 = thresholding_values[1]
+                ok = True
+
+            gray = cv2.cvtColor(self.cv_image, cv2.COLOR_RGB2GRAY)
+            self.cv_image = gray
+            if ok:
+                print(f&#34;Thresholding with values {num} {num2}&#34;)
+                ret, self.cv_image = cv2.threshold(gray, num, num2, type)
+                self._set_image()
+        except Exception as e:
+            print(f&#34;Thresholding failed, retrying as gray image&#34;)
+            try:
+                if thresholding_values is None:
+                    num, ok = QInputDialog.getInt(self.main_window, &#34;Thresholding dialog&#34;, &#34;enter thresholding start&#34;)
+                    num2, ok = QInputDialog.getInt(self.main_window, &#34;Thresholding dialog&#34;, &#34;enter thresholding end&#34;)
+                else:
+                    num = thresholding_values[0]
+                    num2 = thresholding_values[1]
+                    ok = True
+
+                if ok:
+                    print(f&#34;Thresholding with values {num} {num2}&#34;)
+                    ret, self.cv_image = cv2.threshold(self.cv_image, num, num2, type)
+                    self._set_image()
+            except Exception as e:
+                print(f&#34;Thresholding failed with error {repr(e)}&#34;)
+
+    def set_histogram(self, type):
+        &#34;&#34;&#34;Sets histogram of provided type, only functionality is calling the histogram_window set_histogram method&#34;&#34;&#34;
+        print(type)
+        self.main_window.histogram_window.set_histogram(self.cv_image, type)
+
+    def change_to_grayscale(self):
+        &#34;&#34;&#34;Converts image to grayscale by RGB2GRAY&#34;&#34;&#34;
+        try:
+            gray = cv2.cvtColor(self.cv_image, cv2.COLOR_RGB2GRAY)
+        except:
+            print(f&#34;Unable to convert to grayscale, image possibly already in grayscale&#34;)
+            return
+        self.cv_image = gray
+        self._set_image()
+
+    def equalize_histogram(self):
+        &#34;&#34;&#34;Equalizes histogram using cv2.equalizeHist, autohandles grayscale&#34;&#34;&#34;
+        try:
+            cv2.equalizeHist(self.cv_image, self.cv_image)
+            self._set_image()
+        except Exception as e:
+            print(f&#34;Equalizing histogram failed with error {repr(e)} image probably not in grayscale retrying&#34;)
+            self.change_to_grayscale()
+            cv2.equalizeHist(self.cv_image, self.cv_image)
+            self._set_image()
+
+    def stretch_histogram(self):
+        &#34;&#34;&#34;Stretches histogram by use of
+
+            minmax_img = np.zeros((self.cv_image.shape[0], self.cv_image.shape[1]), dtype=&#39;uint8&#39;)
+
+            # Loop over the image and apply Min-Max formulae
+
+            min = np.min(self.cv_image)
+            max = np.max(self.cv_image)
+
+            for i in range(self.cv_image.shape[0]):
+                for j in range(self.cv_image.shape[1]):
+                    minmax_img[i, j] = 255 * (self.cv_image[i, j] - min) / (max - min)
+            self.cv_image = minmax_img
+
+        algorithm
+        &#34;&#34;&#34;
+        try:
+            minmax_img = np.zeros((self.cv_image.shape[0], self.cv_image.shape[1]), dtype=&#39;uint8&#39;)
+
+            # Loop over the image and apply Min-Max formulae
+
+            min = np.min(self.cv_image)
+            max = np.max(self.cv_image)
+
+            for i in range(self.cv_image.shape[0]):
+                for j in range(self.cv_image.shape[1]):
+                    minmax_img[i, j] = 255 * (self.cv_image[i, j] - min) / (max - min)
+            self.cv_image = minmax_img
+
+            self._set_image()
+
+        except Exception as e:
+            print(f&#34;Exception while stretching histogram {repr(e)}&#34;)
+
+            self.change_to_grayscale()
+            self.stretch_histogram()
+
+    def linear_filtering(self):
+        &#34;&#34;&#34;Opens dialog for linear operations and applies the return value&#34;&#34;&#34;
+        try:
+            dialog = MaskSetupDialog(self.cv_image)
+
+            if dialog.exec():
+                self.cv_image = dialog.getInputs()
+                self._set_image()
+        except Exception as e:
+            print(f&#34;Exception using mask seutp dialog {repr(e)}&#34;)
+
+    def morphological_operations(self):
+        &#34;&#34;&#34;Opens dialog for morphological operations and applies the return value&#34;&#34;&#34;
+        dialog = MorphologySetupDialog(self.cv_image)
+
+        if dialog.exec():
+            self.cv_image = dialog.getInputs()
+            self._set_image()
+
+    def segmentation_operations(self):
+        &#34;&#34;&#34;Opens dialog for segmentation operations and applies the return value&#34;&#34;&#34;
+        self.change_to_grayscale()
+        dialog = SegmentationSetupDialog(self.cv_image)
+
+        if dialog.exec():
+            self.cv_image = dialog.getInputs()
+            self._set_image()
+
+    def shape_descriptors_operations(self):
+        self.change_to_grayscale()
+        self._set_image()
+        self.threshold_image(cv2.THRESH_BINARY, [0, 255])
+        self._set_image()
+        dialog = ShapeDescriptorsDialog(self.cv_image)
+        dialog.exec()
+
+    def skeletize(self):
+        &#34;&#34;&#34;Applies skeletization, keeps replicate border type throughout the operation,
+        works for bright text/objects on dark backgrounds&#34;&#34;&#34;
+        img = self.cv_image
+
+        skeleton = np.zeros(img.shape, np.uint8)
+        eroded = np.zeros(img.shape, np.uint8)
+        temp = np.zeros(img.shape, np.uint8)
+
+        _, thresh = cv2.threshold(img, 127, 255, 0)
+
+        kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))
+
+        iters = 0
+        while True:
+            cv2.erode(thresh, kernel, eroded, borderType=cv2.BORDER_REPLICATE)
+            cv2.dilate(eroded, kernel, temp, borderType=cv2.BORDER_REPLICATE)
+            cv2.subtract(thresh, temp, temp)
+            cv2.bitwise_or(skeleton, temp, skeleton)
+            thresh, eroded = eroded, thresh  # Swap instead of copy
+
+            iters += 1
+            if cv2.countNonZero(thresh) == 0:
+                self.cv_image = skeleton
+                self._set_image()
+                return
+
+    def fourier(self):
+        &#34;&#34;&#34;Initialize dialog for fourier transformation and apply the effect to current image&#34;&#34;&#34;
+        dialog = FourierDialog(self.cv_image)
+
+        if dialog.exec():
+            self.cv_image = dialog.getInputs()
+            self._set_image()</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="projekt_apo.image_window.ImageWindow.change_to_grayscale"><code class="name flex">
+<span>def <span class="ident">change_to_grayscale</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Converts image to grayscale by RGB2GRAY</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def change_to_grayscale(self):
+    &#34;&#34;&#34;Converts image to grayscale by RGB2GRAY&#34;&#34;&#34;
+    try:
+        gray = cv2.cvtColor(self.cv_image, cv2.COLOR_RGB2GRAY)
+    except:
+        print(f&#34;Unable to convert to grayscale, image possibly already in grayscale&#34;)
+        return
+    self.cv_image = gray
+    self._set_image()</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.image_window.ImageWindow.equalize_histogram"><code class="name flex">
+<span>def <span class="ident">equalize_histogram</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Equalizes histogram using cv2.equalizeHist, autohandles grayscale</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def equalize_histogram(self):
+    &#34;&#34;&#34;Equalizes histogram using cv2.equalizeHist, autohandles grayscale&#34;&#34;&#34;
+    try:
+        cv2.equalizeHist(self.cv_image, self.cv_image)
+        self._set_image()
+    except Exception as e:
+        print(f&#34;Equalizing histogram failed with error {repr(e)} image probably not in grayscale retrying&#34;)
+        self.change_to_grayscale()
+        cv2.equalizeHist(self.cv_image, self.cv_image)
+        self._set_image()</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.image_window.ImageWindow.fourier"><code class="name flex">
+<span>def <span class="ident">fourier</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Initialize dialog for fourier transformation and apply the effect to current image</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fourier(self):
+    &#34;&#34;&#34;Initialize dialog for fourier transformation and apply the effect to current image&#34;&#34;&#34;
+    dialog = FourierDialog(self.cv_image)
+
+    if dialog.exec():
+        self.cv_image = dialog.getInputs()
+        self._set_image()</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.image_window.ImageWindow.linear_filtering"><code class="name flex">
+<span>def <span class="ident">linear_filtering</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Opens dialog for linear operations and applies the return value</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def linear_filtering(self):
+    &#34;&#34;&#34;Opens dialog for linear operations and applies the return value&#34;&#34;&#34;
+    try:
+        dialog = MaskSetupDialog(self.cv_image)
+
+        if dialog.exec():
+            self.cv_image = dialog.getInputs()
+            self._set_image()
+    except Exception as e:
+        print(f&#34;Exception using mask seutp dialog {repr(e)}&#34;)</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.image_window.ImageWindow.morphological_operations"><code class="name flex">
+<span>def <span class="ident">morphological_operations</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Opens dialog for morphological operations and applies the return value</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def morphological_operations(self):
+    &#34;&#34;&#34;Opens dialog for morphological operations and applies the return value&#34;&#34;&#34;
+    dialog = MorphologySetupDialog(self.cv_image)
+
+    if dialog.exec():
+        self.cv_image = dialog.getInputs()
+        self._set_image()</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.image_window.ImageWindow.negate_image"><code class="name flex">
+<span>def <span class="ident">negate_image</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Creates a bitwise not of current image and sets</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def negate_image(self):
+    &#34;&#34;&#34;Creates a bitwise not of current image and sets&#34;&#34;&#34;
+    self.cv_image = cv2.bitwise_not(self.cv_image)
+    self._set_image()</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.image_window.ImageWindow.reset_image"><code class="name flex">
+<span>def <span class="ident">reset_image</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Resets the image to the state it was when loaded from file</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reset_image(self):
+    &#34;&#34;&#34;Resets the image to the state it was when loaded from file&#34;&#34;&#34;
+    self.cv_image = self._original_image
+    self._set_image()</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.image_window.ImageWindow.save_image_to_file"><code class="name flex">
+<span>def <span class="ident">save_image_to_file</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Saves image to specified location in specified format, available options include jpg png and anything else that cv2.imwrite allows</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save_image_to_file(self):
+    &#34;&#34;&#34;Saves image to specified location in specified format, available options include jpg png and anything else that cv2.imwrite allows&#34;&#34;&#34;
+    try:
+        fname = QFileDialog.getSaveFileName(self.main_window, &#39;Save file&#39;,
+                                            &#39;c:\\&#39;, &#34;Image files (*.jpg *.png, *.bmp)&#34;)[0]
+        print(f&#34;Saving image to {fname}&#34;)
+        cv2.imwrite(fname,self.cv_image)
+
+    except Exception as e:
+        log.error(repr(e))</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.image_window.ImageWindow.segmentation_operations"><code class="name flex">
+<span>def <span class="ident">segmentation_operations</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Opens dialog for segmentation operations and applies the return value</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def segmentation_operations(self):
+    &#34;&#34;&#34;Opens dialog for segmentation operations and applies the return value&#34;&#34;&#34;
+    self.change_to_grayscale()
+    dialog = SegmentationSetupDialog(self.cv_image)
+
+    if dialog.exec():
+        self.cv_image = dialog.getInputs()
+        self._set_image()</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.image_window.ImageWindow.set_histogram"><code class="name flex">
+<span>def <span class="ident">set_histogram</span></span>(<span>self, type)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Sets histogram of provided type, only functionality is calling the histogram_window set_histogram method</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_histogram(self, type):
+    &#34;&#34;&#34;Sets histogram of provided type, only functionality is calling the histogram_window set_histogram method&#34;&#34;&#34;
+    print(type)
+    self.main_window.histogram_window.set_histogram(self.cv_image, type)</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.image_window.ImageWindow.set_image_from_file"><code class="name flex">
+<span>def <span class="ident">set_image_from_file</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Loads a new image from file, performs BGR2RGB conversion for compatibility with pyqt and most operations</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_image_from_file(self):
+    &#34;&#34;&#34;Loads a new image from file, performs BGR2RGB conversion for compatibility with pyqt and most operations&#34;&#34;&#34;
+    try:
+        fname = QFileDialog.getOpenFileName(self.main_window, &#39;Open file&#39;,
+                                            &#39;c:\\&#39;, &#34;Image files (*.jpg *.gif *.tif *.png *.bmp)&#34;)[0]
+
+        print(f&#34;Opening {fname}&#34;)
+        self.cv_image = cv2.imread(fname)
+        cv2.cvtColor(self.cv_image, cv2.COLOR_BGR2RGB, self.cv_image)
+
+        self._original_image = self.cv_image
+        self._set_image()
+    except Exception as e:
+        log.error(repr(e))</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.image_window.ImageWindow.shape_descriptors_operations"><code class="name flex">
+<span>def <span class="ident">shape_descriptors_operations</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def shape_descriptors_operations(self):
+    self.change_to_grayscale()
+    self._set_image()
+    self.threshold_image(cv2.THRESH_BINARY, [0, 255])
+    self._set_image()
+    dialog = ShapeDescriptorsDialog(self.cv_image)
+    dialog.exec()</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.image_window.ImageWindow.skeletize"><code class="name flex">
+<span>def <span class="ident">skeletize</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Applies skeletization, keeps replicate border type throughout the operation,
+works for bright text/objects on dark backgrounds</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def skeletize(self):
+    &#34;&#34;&#34;Applies skeletization, keeps replicate border type throughout the operation,
+    works for bright text/objects on dark backgrounds&#34;&#34;&#34;
+    img = self.cv_image
+
+    skeleton = np.zeros(img.shape, np.uint8)
+    eroded = np.zeros(img.shape, np.uint8)
+    temp = np.zeros(img.shape, np.uint8)
+
+    _, thresh = cv2.threshold(img, 127, 255, 0)
+
+    kernel = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))
+
+    iters = 0
+    while True:
+        cv2.erode(thresh, kernel, eroded, borderType=cv2.BORDER_REPLICATE)
+        cv2.dilate(eroded, kernel, temp, borderType=cv2.BORDER_REPLICATE)
+        cv2.subtract(thresh, temp, temp)
+        cv2.bitwise_or(skeleton, temp, skeleton)
+        thresh, eroded = eroded, thresh  # Swap instead of copy
+
+        iters += 1
+        if cv2.countNonZero(thresh) == 0:
+            self.cv_image = skeleton
+            self._set_image()
+            return</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.image_window.ImageWindow.stretch_histogram"><code class="name flex">
+<span>def <span class="ident">stretch_histogram</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Stretches histogram by use of</p>
+<pre><code>minmax_img = np.zeros((self.cv_image.shape[0], self.cv_image.shape[1]), dtype='uint8')
+
+# Loop over the image and apply Min-Max formulae
+
+min = np.min(self.cv_image)
+max = np.max(self.cv_image)
+
+for i in range(self.cv_image.shape[0]):
+    for j in range(self.cv_image.shape[1]):
+        minmax_img[i, j] = 255 * (self.cv_image[i, j] - min) / (max - min)
+self.cv_image = minmax_img
+</code></pre>
+<p>algorithm</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def stretch_histogram(self):
+    &#34;&#34;&#34;Stretches histogram by use of
+
+        minmax_img = np.zeros((self.cv_image.shape[0], self.cv_image.shape[1]), dtype=&#39;uint8&#39;)
+
+        # Loop over the image and apply Min-Max formulae
+
+        min = np.min(self.cv_image)
+        max = np.max(self.cv_image)
+
+        for i in range(self.cv_image.shape[0]):
+            for j in range(self.cv_image.shape[1]):
+                minmax_img[i, j] = 255 * (self.cv_image[i, j] - min) / (max - min)
+        self.cv_image = minmax_img
+
+    algorithm
+    &#34;&#34;&#34;
+    try:
+        minmax_img = np.zeros((self.cv_image.shape[0], self.cv_image.shape[1]), dtype=&#39;uint8&#39;)
+
+        # Loop over the image and apply Min-Max formulae
+
+        min = np.min(self.cv_image)
+        max = np.max(self.cv_image)
+
+        for i in range(self.cv_image.shape[0]):
+            for j in range(self.cv_image.shape[1]):
+                minmax_img[i, j] = 255 * (self.cv_image[i, j] - min) / (max - min)
+        self.cv_image = minmax_img
+
+        self._set_image()
+
+    except Exception as e:
+        print(f&#34;Exception while stretching histogram {repr(e)}&#34;)
+
+        self.change_to_grayscale()
+        self.stretch_histogram()</code></pre>
+</details>
+</dd>
+<dt id="projekt_apo.image_window.ImageWindow.threshold_image"><code class="name flex">
+<span>def <span class="ident">threshold_image</span></span>(<span>self, type, thresholding_values=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Thresholds image to specified values</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def threshold_image(self, type, thresholding_values=None):
+    &#34;&#34;&#34;Thresholds image to specified values&#34;&#34;&#34;
+    print(f&#34;Performing Thresholding of type {type}&#34;)
+    try:
+        if thresholding_values is None:
+            num, ok = QInputDialog.getInt(self.main_window, &#34;Thresholding dialog&#34;, &#34;enter thresholding start&#34;)
+            num2, ok = QInputDialog.getInt(self.main_window, &#34;Thresholding dialog&#34;, &#34;enter thresholding end&#34;)
+        else:
+            num = thresholding_values[0]
+            num2 = thresholding_values[1]
+            ok = True
+
+        gray = cv2.cvtColor(self.cv_image, cv2.COLOR_RGB2GRAY)
+        self.cv_image = gray
+        if ok:
+            print(f&#34;Thresholding with values {num} {num2}&#34;)
+            ret, self.cv_image = cv2.threshold(gray, num, num2, type)
+            self._set_image()
+    except Exception as e:
+        print(f&#34;Thresholding failed, retrying as gray image&#34;)
+        try:
+            if thresholding_values is None:
+                num, ok = QInputDialog.getInt(self.main_window, &#34;Thresholding dialog&#34;, &#34;enter thresholding start&#34;)
+                num2, ok = QInputDialog.getInt(self.main_window, &#34;Thresholding dialog&#34;, &#34;enter thresholding end&#34;)
+            else:
+                num = thresholding_values[0]
+                num2 = thresholding_values[1]
+                ok = True
+
+            if ok:
+                print(f&#34;Thresholding with values {num} {num2}&#34;)
+                ret, self.cv_image = cv2.threshold(self.cv_image, num, num2, type)
+                self._set_image()
+        except Exception as e:
+            print(f&#34;Thresholding failed with error {repr(e)}&#34;)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="projekt_apo" href="index.html">projekt_apo</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="projekt_apo.image_window.ImageWindow" href="#projekt_apo.image_window.ImageWindow">ImageWindow</a></code></h4>
+<ul class="">
+<li><code><a title="projekt_apo.image_window.ImageWindow.change_to_grayscale" href="#projekt_apo.image_window.ImageWindow.change_to_grayscale">change_to_grayscale</a></code></li>
+<li><code><a title="projekt_apo.image_window.ImageWindow.equalize_histogram" href="#projekt_apo.image_window.ImageWindow.equalize_histogram">equalize_histogram</a></code></li>
+<li><code><a title="projekt_apo.image_window.ImageWindow.fourier" href="#projekt_apo.image_window.ImageWindow.fourier">fourier</a></code></li>
+<li><code><a title="projekt_apo.image_window.ImageWindow.linear_filtering" href="#projekt_apo.image_window.ImageWindow.linear_filtering">linear_filtering</a></code></li>
+<li><code><a title="projekt_apo.image_window.ImageWindow.morphological_operations" href="#projekt_apo.image_window.ImageWindow.morphological_operations">morphological_operations</a></code></li>
+<li><code><a title="projekt_apo.image_window.ImageWindow.negate_image" href="#projekt_apo.image_window.ImageWindow.negate_image">negate_image</a></code></li>
+<li><code><a title="projekt_apo.image_window.ImageWindow.reset_image" href="#projekt_apo.image_window.ImageWindow.reset_image">reset_image</a></code></li>
+<li><code><a title="projekt_apo.image_window.ImageWindow.save_image_to_file" href="#projekt_apo.image_window.ImageWindow.save_image_to_file">save_image_to_file</a></code></li>
+<li><code><a title="projekt_apo.image_window.ImageWindow.segmentation_operations" href="#projekt_apo.image_window.ImageWindow.segmentation_operations">segmentation_operations</a></code></li>
+<li><code><a title="projekt_apo.image_window.ImageWindow.set_histogram" href="#projekt_apo.image_window.ImageWindow.set_histogram">set_histogram</a></code></li>
+<li><code><a title="projekt_apo.image_window.ImageWindow.set_image_from_file" href="#projekt_apo.image_window.ImageWindow.set_image_from_file">set_image_from_file</a></code></li>
+<li><code><a title="projekt_apo.image_window.ImageWindow.shape_descriptors_operations" href="#projekt_apo.image_window.ImageWindow.shape_descriptors_operations">shape_descriptors_operations</a></code></li>
+<li><code><a title="projekt_apo.image_window.ImageWindow.skeletize" href="#projekt_apo.image_window.ImageWindow.skeletize">skeletize</a></code></li>
+<li><code><a title="projekt_apo.image_window.ImageWindow.stretch_histogram" href="#projekt_apo.image_window.ImageWindow.stretch_histogram">stretch_histogram</a></code></li>
+<li><code><a title="projekt_apo.image_window.ImageWindow.threshold_image" href="#projekt_apo.image_window.ImageWindow.threshold_image">threshold_image</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.4</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

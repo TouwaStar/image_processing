@@ -12,6 +12,7 @@ from matplotlib.figure import Figure
 import numpy as np
 
 class MaskSetupDialog(QDialog):
+    """Class responsible for performing linear filtering mask operations, displays as a separate window from main one"""
     def __init__(self,cv_image, parent = None):
         try:
             print("Initializing mask setup dialog")
@@ -53,12 +54,25 @@ class MaskSetupDialog(QDialog):
             special_masks_layout.addWidget(roberts_button)
             special_masks_layout.addWidget(prewitt_button)
 
+
+            self.radio_button_direction = QRadioButton("L")
+            self.radio_button_direction2 = QRadioButton("R")
+            self.radio_button_direction.setChecked(True)
+            box_directions_layout = QHBoxLayout()
+            box_directions_layout.addWidget(self.radio_button_direction)
+            box_directions_layout.addWidget(self.radio_button_direction2)
+
+
             self.scale_regular_button = QPushButton("Apply Regular Scaling")
             self.scale_trivalue_button = QPushButton("Apply Trivalue Scaling")
             self.scale_cut_button = QPushButton("Apply Cut Scaling")
             self.scale_regular_button.clicked.connect(self.set_scaling_1)
             self.scale_trivalue_button.clicked.connect(self.set_scaling_2)
             self.scale_cut_button.clicked.connect(self.set_scaling_3)
+
+            self.median_button = QPushButton("Apply Median")
+            self.median_button.clicked.connect(self._apply_median)
+
 
 
             self.scaling_scale_min = QLineEdit(self)
@@ -90,8 +104,12 @@ class MaskSetupDialog(QDialog):
             scaling_masks_layout.addWidget(self.scale_trivalue_button)
             scaling_masks_layout.addWidget(self.scale_cut_button)
 
+            #change
+            scaling_masks_layout.addWidget(self.median_button)
+
             self.main_layout.addWidget(buttonBox,2,1)
             self.main_layout.addLayout(image_setting_layout,3,3)
+            self.main_layout.addLayout(box_directions_layout,4,0)
             self.main_layout.addLayout(special_masks_layout,3,0)
             self.main_layout.addLayout(scaling_masks_layout,2,0)
             self.main_layout.addLayout(scaling_scale_layout,1,0)
@@ -155,6 +173,7 @@ class MaskSetupDialog(QDialog):
             print(f"Unable to initialize mask setup dialog {repr(e)}")
 
     def _reset_image(self):
+        """Resets the image to the one first passed when initializing the class """
         print("Reseting image")
         print(self.original_cv_image)
         self.working_image = self.original_cv_image
@@ -162,6 +181,7 @@ class MaskSetupDialog(QDialog):
         self.set_image()
 
     def set_scaling_min_max_image(self):
+        """Sets the scaling values to min and max properties of the image"""
         self.scaling_scale_max.setText(str(np.max(self.working_image)))
         self.scaling_scale_min.setText(str(np.min(self.working_image)))
 
@@ -173,6 +193,7 @@ class MaskSetupDialog(QDialog):
         self.set_scaling(3)
 
     def set_scaling(self, scale):
+        """Sets scaling respective to the button clicked, uses the self._calculate_scaling method per pixel in image"""
         img_to_scale = self.working_image.copy()
 
         min = np.min(img_to_scale)
@@ -196,6 +217,25 @@ class MaskSetupDialog(QDialog):
         self.set_image()
 
     def _calculate_scaling(self, oldLevel, min, max, method):
+        """Calculates scaling using the method selected for one pixel of the image
+
+        if method == REGULAR:
+            return ((oldLevel - min) / (max - min)) * SCALE_MAX
+        elif method == TRIVALUE:
+            if oldLevel < SCALE_MIN:
+                return SCALE_MIN
+            if oldLevel == SCALE_MIN:
+                return SCALE_MAX / 2
+            return SCALE_MAX
+        elif method == CUT:
+            if oldLevel < SCALE_MIN:
+                return SCALE_MIN
+            if oldLevel <= SCALE_MAX:
+                return oldLevel
+            return SCALE_MAX
+        return oldLevel
+
+        """
         SCALE_MIN = int(self.scaling_scale_min.text())
         SCALE_MAX = int(self.scaling_scale_max.text())
         NO_SCALING = 0
@@ -220,81 +260,101 @@ class MaskSetupDialog(QDialog):
         return oldLevel
 
     def _apply_roberts(self):
+        """Applies roberts masks in concurrent fashion by first performing filter2D operations for both of them
+        and then adding the results using addWeighted method """
         self.cv_image = self.working_image
-        try:
-            mask = [1,0,0,-1]
-            kernel = np.array(mask, dtype=np.float32)
-            if kernel.sum() != 0:
-                kernel /= kernel.sum()
-            cv_image1 = cv2.filter2D(self.cv_image, -1, kernel, borderType=self._get_current_border_type())
-        except Exception as e:
-            print(f"Exception while creating linear filter for image {repr(e)}")
-            return
-        try:
-            mask = [0,-1,1,0]
-            kernel = np.array(mask, dtype=np.float32)
-            if kernel.sum() != 0:
-                kernel /= kernel.sum()
-            cv_image2 = cv2.filter2D(self.cv_image, -1, kernel, borderType=self._get_current_border_type())
-        except Exception as e:
-            print(f"Exception while creating linear filter for image {repr(e)}")
-            return
-        self.cv_image = cv2.addWeighted(cv_image1,0.5,cv_image2,0.5, 2)
+        if self.radio_button_direction.isChecked():
+            try:
+                mask = [1,0,0,-1]
+                kernel = np.array(mask, dtype=np.float32)
+                if kernel.sum() != 0:
+                    kernel /= kernel.sum()
+                self.cv_image = cv2.filter2D(self.cv_image, -1, kernel, borderType=self._get_current_border_type())
+            except Exception as e:
+                print(f"Exception while creating linear filter for image {repr(e)}")
+                return
+        else:
+            try:
+                mask = [0,-1,1,0]
+                kernel = np.array(mask, dtype=np.float32)
+                if kernel.sum() != 0:
+                    kernel /= kernel.sum()
+                self.cv_image = cv2.filter2D(self.cv_image, -1, kernel, borderType=self._get_current_border_type())
+            except Exception as e:
+                print(f"Exception while creating linear filter for image {repr(e)}")
+                return
         self._apply_changes()
         self.set_image()
 
     def _apply_sobel(self):
+        """Applies sobels masks in concurrent fashion by first performing filter2D operations for both of them
+        and then adding the results using addWeighted method """
+        self.cv_image = self.working_image
+        if self.radio_button_direction.isChecked():
+            try:
+                mask = [-1,0,1,-2,0,2,-1,0,1]
+                kernel = np.array(mask, dtype=np.float32)
+                if kernel.sum() != 0:
+                    kernel /= kernel.sum()
+                self.cv_image = cv2.filter2D(self.cv_image, -1, kernel, borderType=self._get_current_border_type())
+            except Exception as e:
+                print(f"Exception while creating linear filter for image {repr(e)}")
+                return
+        else:
+            try:
+                mask = [-1,-2,-1,0,0,0,1,2,1]
+                kernel = np.array(mask, dtype=np.float32)
+                if kernel.sum() != 0:
+                    kernel /= kernel.sum()
+                self.cv_image = cv2.filter2D(self.cv_image, -1, kernel, borderType=self._get_current_border_type())
+            except Exception as e:
+                print(f"Exception while creating linear filter for image {repr(e)}")
+                return
+        self._apply_changes()
+        self.set_image()
+
+    def _apply_median(self):
         self.cv_image = self.working_image
         try:
-            mask = [-1,0,1,-2,0,2,-1,0,1]
-            kernel = np.array(mask, dtype=np.float32)
-            if kernel.sum() != 0:
-                kernel /= kernel.sum()
-            cv_image1 = cv2.filter2D(self.cv_image, -1, kernel, borderType=self._get_current_border_type())
+            self.cv_image = cv2.blur(self.cv_image, (int(self.mask_scale_x.text()),int(self.mask_scale_y.text())))
         except Exception as e:
-            print(f"Exception while creating linear filter for image {repr(e)}")
-            return
-        try:
-            mask = [-1,-2,-1,0,0,0,1,2,1]
-            kernel = np.array(mask, dtype=np.float32)
-            if kernel.sum() != 0:
-                kernel /= kernel.sum()
-            cv_image2 = cv2.filter2D(self.cv_image, -1, kernel, borderType=self._get_current_border_type())
-        except Exception as e:
-            print(f"Exception while creating linear filter for image {repr(e)}")
-            return
-        self.cv_image = cv2.addWeighted(cv_image1,0.5,cv_image2,0.5, 2)
+            print(f"Unable to set median blur {repr(e)}")
         self._apply_changes()
         self.set_image()
 
     def _apply_prewitt(self):
+        """Applies prewitt masks in concurrent fashion by first performing filter2D operations for both of them
+        and then adding the results using addWeighted method """
         self.cv_image = self.working_image
-        try:
-            mask = [1,0,-1,1,0,-1,1,0,-1]
-            kernel = np.array(mask, dtype=np.float32)
-            if kernel.sum() != 0:
-                kernel /= kernel.sum()
-            cv_image1 = cv2.filter2D(self.cv_image, -1, kernel, borderType=self._get_current_border_type())
-        except Exception as e:
-            print(f"Exception while creating linear filter for image {repr(e)}")
-            return
-        try:
-            mask = [1,1,1,0,0,0,-1,-1,-1]
-            kernel = np.array(mask, dtype=np.float32)
-            if kernel.sum() != 0:
-                kernel /= kernel.sum()
-            cv_image2 = cv2.filter2D(self.cv_image, -1, kernel, borderType=self._get_current_border_type())
-        except Exception as e:
-            print(f"Exception while creating linear filter for image {repr(e)}")
-            return
-        self.cv_image = cv2.addWeighted(cv_image1,0.5,cv_image2,0.5, 2)
+        if self.radio_button_direction.isChecked():
+            try:
+                mask = [1,0,-1,1,0,-1,1,0,-1]
+                kernel = np.array(mask, dtype=np.float32)
+                if kernel.sum() != 0:
+                    kernel /= kernel.sum()
+                self.cv_image = cv2.filter2D(self.cv_image, -1, kernel, borderType=self._get_current_border_type())
+            except Exception as e:
+                print(f"Exception while creating linear filter for image {repr(e)}")
+                return
+        else:
+            try:
+                mask = [1,1,1,0,0,0,-1,-1,-1]
+                kernel = np.array(mask, dtype=np.float32)
+                if kernel.sum() != 0:
+                    kernel /= kernel.sum()
+                self.cv_image = cv2.filter2D(self.cv_image, -1, kernel, borderType=self._get_current_border_type())
+            except Exception as e:
+                print(f"Exception while creating linear filter for image {repr(e)}")
+                return
         self._apply_changes()
         self.set_image()
 
     def _apply_changes(self):
+        """Applies the preview changes to currently working image so the next operation operates on the changed image"""
         self.working_image = self.cv_image
 
     def set_mask_layout(self, x, y):
+        """Sets the layout of the input fields for mask the user can enter"""
         for i in reversed(range(self.mask_layout.count())):
             self.mask_layout.itemAt(i).widget().setParent(None)
         self.main_layout.removeItem(self.mask_layout)
@@ -317,6 +377,7 @@ class MaskSetupDialog(QDialog):
         self.main_layout.addLayout(self.mask_layout, 0,1)
 
     def mask_scale_changed(self):
+        """Notified when scale has changed, creates a new mask layout and auto applies the resulting filter"""
         try:
             print(f"Scale changed to {int(self.mask_scale_x.text())} {int(self.mask_scale_y.text())}")
         except:
@@ -326,6 +387,7 @@ class MaskSetupDialog(QDialog):
         self.set_filter()
 
     def set_filter(self):
+        """Applies the current mask created from input fields"""
         self.cv_image = self.working_image
         try:
             kernel = np.array(self._get_current_mask(), dtype=np.float32)
@@ -337,6 +399,7 @@ class MaskSetupDialog(QDialog):
         self.set_image()
 
     def set_image(self):
+        """Same as the method in image_window, it sets the result of operations on cv_image as displayed image"""
         print(f"Setting image {self.cv_image}")
         try:
             try:
@@ -360,9 +423,11 @@ class MaskSetupDialog(QDialog):
             print(f"Failed setting image {repr(e)}")
 
     def _get_current_mask(self):
+        """Returns the values currently set in the mask input fields"""
         return [self.input_fields[x].text() for x in range(0,int(self.mask_scale_x.text()) * int(self.mask_scale_y.text()))]
 
     def _get_current_border_type(self):
+        """Returns currently set border type from radio buttons"""
         border_type = None
         if self.radio_button.isChecked():
             border_type = cv2.BORDER_CONSTANT
@@ -375,4 +440,5 @@ class MaskSetupDialog(QDialog):
         return border_type
 
     def getInputs(self):
+        """Class return value, used when the window closes and operations return to image_window"""
         return self.working_image
